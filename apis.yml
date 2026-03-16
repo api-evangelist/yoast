@@ -12,7 +12,7 @@ image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - API
 created: '2025-01-14'
-modified: '2025-01-14'
+modified: '2026-03-16'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/apis.yml
 specificationVersion: '0.19'
@@ -32,4 +32,4 @@ apis:
         url: ' https://developer.yoast.com/'
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
