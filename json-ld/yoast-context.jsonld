@@ -1,0 +1,46 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "yoast": "https://developer.yoast.com/vocabulary#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "SeoMetadata": "yoast:SeoMetadata",
+    "SeoHeadResponse": "yoast:SeoHeadResponse",
+    "RobotsDirectives": "yoast:RobotsDirectives",
+    "OpenGraphMetadata": "yoast:OpenGraphMetadata",
+    "TwitterCardMetadata": "yoast:TwitterCardMetadata",
+
+    "title": { "@id": "schema:name", "@type": "xsd:string" },
+    "description": { "@id": "schema:description", "@type": "xsd:string" },
+    "canonical": { "@id": "schema:url", "@type": "@id" },
+    "robots": { "@id": "yoast:robots", "@type": "yoast:RobotsDirectives" },
+    "index": { "@id": "yoast:indexDirective", "@type": "xsd:string" },
+    "follow": { "@id": "yoast:followDirective", "@type": "xsd:string" },
+
+    "og_locale": { "@id": "yoast:ogLocale", "@type": "xsd:string" },
+    "og_type": { "@id": "yoast:ogType", "@type": "xsd:string" },
+    "og_title": { "@id": "yoast:ogTitle", "@type": "xsd:string" },
+    "og_description": { "@id": "yoast:ogDescription", "@type": "xsd:string" },
+    "og_url": { "@id": "yoast:ogUrl", "@type": "@id" },
+    "og_site_name": { "@id": "yoast:ogSiteName", "@type": "xsd:string" },
+    "og_image": { "@id": "yoast:ogImage", "@container": "@set" },
+
+    "twitter_card": { "@id": "yoast:twitterCard", "@type": "xsd:string" },
+    "twitter_title": { "@id": "yoast:twitterTitle", "@type": "xsd:string" },
+    "twitter_description": { "@id": "yoast:twitterDescription", "@type": "xsd:string" },
+    "twitter_image": { "@id": "yoast:twitterImage", "@type": "@id" },
+
+    "article_published_time": { "@id": "schema:datePublished", "@type": "xsd:dateTime" },
+    "article_modified_time": { "@id": "schema:dateModified", "@type": "xsd:dateTime" },
+    "author": { "@id": "schema:author", "@type": "xsd:string" },
+    "schema": { "@id": "yoast:schemaGraph", "@type": "@json" },
+
+    "html": { "@id": "yoast:htmlHead", "@type": "xsd:string" },
+    "json": { "@id": "yoast:seoMetadata", "@type": "yoast:SeoMetadata" },
+    "status": { "@id": "yoast:httpStatus", "@type": "xsd:integer" },
+
+    "yoast_head": { "@id": "yoast:htmlHead", "@type": "xsd:string" },
+    "yoast_head_json": { "@id": "yoast:seoMetadata", "@type": "yoast:SeoMetadata" }
+  }
+}

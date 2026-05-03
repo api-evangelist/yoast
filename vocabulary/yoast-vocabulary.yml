@@ -1,0 +1,131 @@
+vocabulary:
+  name: Yoast Vocabulary
+  description: >-
+    Domain vocabulary for Yoast SEO covering search engine optimization concepts,
+    metadata types, structured data, social sharing, and WordPress integration terms.
+  provider: Yoast
+  url: https://developer.yoast.com/
+  created: '2026-05-03'
+  modified: '2026-05-03'
+  tags:
+    - SEO
+    - WordPress
+    - Metadata
+
+terms:
+  - term: SEO
+    definition: >-
+      Search Engine Optimization. The practice of improving a website's visibility
+      in organic (non-paid) search engine results through technical and content improvements.
+    tags:
+      - Core
+
+  - term: Meta Description
+    definition: >-
+      An HTML attribute providing a brief summary of a web page. Displayed by search
+      engines in search results as a snippet below the page title.
+    tags:
+      - Metadata
+
+  - term: Canonical URL
+    definition: >-
+      The preferred URL for a web page when multiple URLs can access the same content.
+      Specified using the <link rel="canonical"> tag to prevent duplicate content issues.
+    tags:
+      - Metadata
+      - Technical SEO
+
+  - term: Schema.org
+    definition: >-
+      A collaborative vocabulary for structured data markup on web pages. Yoast generates
+      Schema.org JSON-LD structured data to help search engines understand page content
+      and enable rich results.
+    tags:
+      - Structured Data
+
+  - term: JSON-LD
+    definition: >-
+      JavaScript Object Notation for Linked Data. A lightweight Linked Data format
+      used by Yoast to embed Schema.org structured data in web pages.
+    tags:
+      - Structured Data
+
+  - term: Open Graph
+    definition: >-
+      A protocol that enables web pages to become rich objects in social media platforms.
+      Yoast generates og: meta tags to control how pages appear when shared on Facebook,
+      LinkedIn, and other platforms.
+    tags:
+      - Social Sharing
+
+  - term: Twitter Card
+    definition: >-
+      A set of HTML meta tags that control how content appears when shared on Twitter/X.
+      Yoast generates twitter: meta tags for summary, summary_large_image, app, and player cards.
+    tags:
+      - Social Sharing
+
+  - term: Robots Directives
+    definition: >-
+      Instructions given to search engine crawlers via the <meta name="robots"> tag or
+      X-Robots-Tag HTTP header. Common values include index/noindex and follow/nofollow.
+    tags:
+      - Technical SEO
+
+  - term: Headless WordPress
+    definition: >-
+      An architecture where WordPress serves as a CMS backend (via REST API) while the
+      frontend is built with a separate framework. The Yoast REST API is designed specifically
+      for this use case.
+    tags:
+      - Architecture
+
+  - term: XML Sitemap
+    definition: >-
+      A file listing a website's URLs to help search engines discover and index content.
+      Yoast SEO automatically generates XML sitemaps for all post types and taxonomies.
+    tags:
+      - Technical SEO
+
+  - term: Rich Results
+    definition: >-
+      Enhanced search result listings that include additional visual elements such as star
+      ratings, breadcrumbs, or FAQ panels, enabled by Schema.org structured data.
+    tags:
+      - Structured Data
+
+  - term: Breadcrumbs
+    definition: >-
+      A navigation aid showing a page's position in the site hierarchy. Yoast generates
+      breadcrumb Schema.org markup to enable breadcrumb rich results in search.
+    tags:
+      - Navigation
+      - Structured Data
+
+  - term: WooCommerce SEO
+    definition: >-
+      A Yoast premium plugin that extends Yoast SEO specifically for WooCommerce product
+      pages, category pages, and shopping-related structured data.
+    tags:
+      - E-commerce
+
+  - term: Focus Keyword
+    definition: >-
+      The primary keyword or phrase a post or page is optimized for. Yoast SEO analyzes
+      content and provides feedback on keyword usage in titles, descriptions, and body copy.
+    tags:
+      - Content Optimization
+
+  - term: Readability Analysis
+    definition: >-
+      Yoast's content analysis feature that evaluates text for reading ease using the
+      Flesch Reading Ease score, sentence length, passive voice, and transition words.
+    tags:
+      - Content Optimization
+
+  - term: Local SEO
+    definition: >-
+      Optimization for location-based search queries. Yoast Local SEO adds business
+      location, hours, maps, and LocalBusiness Schema.org markup.
+    tags:
+      - Local

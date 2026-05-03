@@ -1,0 +1,162 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Yoast SEO Metadata"
+  description: >-
+    Workflow capability for retrieving and managing SEO metadata from WordPress sites
+    using the Yoast REST API. Enables headless CMS, content auditing, and SEO monitoring
+    workflows by providing unified access to SEO metadata, structured data, and social
+    sharing metadata for all WordPress posts and pages.
+  tags:
+    - Yoast
+    - SEO
+    - WordPress
+    - Metadata
+    - Headless CMS
+    - Content Audit
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      YOAST_SITE_URL: YOAST_SITE_URL
+
+capability:
+  consumes:
+    - import: yoast-rest
+      location: ./shared/yoast-rest.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: yoast-seo-api
+      description: "Unified REST API for Yoast SEO metadata retrieval across all content types."
+      resources:
+        - path: /v1/seo-head
+          name: seo-head
+          description: "Retrieve SEO metadata for any URL"
+          operations:
+            - method: GET
+              name: get-seo-head
+              description: "Get full SEO head metadata for a URL including Schema.org, OG, and Twitter Card"
+              call: "yoast-rest.get-seo-head"
+              with:
+                url: "rest.url"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/posts
+          name: posts
+          description: "WordPress posts with Yoast SEO data"
+          operations:
+            - method: GET
+              name: list-posts-with-seo
+              description: "List all WordPress posts with SEO metadata"
+              call: "yoast-rest.list-posts-with-seo"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/posts/{id}
+          name: post
+          description: "Single post with SEO data"
+          operations:
+            - method: GET
+              name: get-post-with-seo
+              description: "Get a single WordPress post with full SEO metadata"
+              call: "yoast-rest.get-post-with-seo"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/pages
+          name: pages
+          description: "WordPress pages with Yoast SEO data"
+          operations:
+            - method: GET
+              name: list-pages-with-seo
+              description: "List all WordPress pages with SEO metadata"
+              call: "yoast-rest.list-pages-with-seo"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/pages/{id}
+          name: page
+          description: "Single page with SEO data"
+          operations:
+            - method: GET
+              name: get-page-with-seo
+              description: "Get a single WordPress page with full SEO metadata"
+              call: "yoast-rest.get-page-with-seo"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: yoast-seo-mcp
+      transport: http
+      description: "MCP server for AI-assisted SEO metadata retrieval and content auditing."
+      tools:
+        - name: get-seo-head
+          description: "Retrieve full SEO metadata for any URL including meta tags, Schema.org, Open Graph, and Twitter Card data"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "yoast-rest.get-seo-head"
+          with:
+            url: "tools.url"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-posts-with-seo
+          description: "List WordPress posts with their complete Yoast SEO metadata"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "yoast-rest.list-posts-with-seo"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-post-with-seo
+          description: "Get a WordPress post with full SEO metadata including canonical, robots, and structured data"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "yoast-rest.get-post-with-seo"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-pages-with-seo
+          description: "List WordPress pages with their complete Yoast SEO metadata"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "yoast-rest.list-pages-with-seo"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-page-with-seo
+          description: "Get a WordPress page with full SEO metadata including canonical, robots, and structured data"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "yoast-rest.get-page-with-seo"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."

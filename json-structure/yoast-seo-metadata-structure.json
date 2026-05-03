@@ -1,0 +1,120 @@
+{
+  "title": "Yoast SEO Metadata Structure",
+  "description": "JSON structure documentation for Yoast SEO metadata returned by the REST API",
+  "fields": [
+    {
+      "name": "title",
+      "type": "string",
+      "description": "SEO page title including site name",
+      "example": "My Blog Post - Site Name"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "Meta description for search result snippets",
+      "example": "A brief summary of the page content for search engines."
+    },
+    {
+      "name": "canonical",
+      "type": "string (URI)",
+      "description": "Canonical URL to prevent duplicate content issues",
+      "example": "https://example.com/blog/my-post/"
+    },
+    {
+      "name": "robots",
+      "type": "object",
+      "description": "Robot directives controlling crawling and indexing behavior",
+      "children": [
+        { "name": "index", "type": "string", "values": ["index", "noindex"] },
+        { "name": "follow", "type": "string", "values": ["follow", "nofollow"] },
+        { "name": "max-snippet", "type": "string", "example": "max-snippet:-1" },
+        { "name": "max-image-preview", "type": "string", "example": "max-image-preview:large" },
+        { "name": "max-video-preview", "type": "string", "example": "max-video-preview:-1" }
+      ]
+    },
+    {
+      "name": "og_locale",
+      "type": "string",
+      "description": "Open Graph locale",
+      "example": "en_US"
+    },
+    {
+      "name": "og_type",
+      "type": "string",
+      "description": "Open Graph content type",
+      "example": "article"
+    },
+    {
+      "name": "og_title",
+      "type": "string",
+      "description": "Open Graph title for social sharing"
+    },
+    {
+      "name": "og_description",
+      "type": "string",
+      "description": "Open Graph description for social sharing"
+    },
+    {
+      "name": "og_url",
+      "type": "string (URI)",
+      "description": "Open Graph canonical URL"
+    },
+    {
+      "name": "og_site_name",
+      "type": "string",
+      "description": "Open Graph site name"
+    },
+    {
+      "name": "og_image",
+      "type": "array",
+      "description": "Open Graph images for social sharing previews",
+      "children": [
+        { "name": "url", "type": "string (URI)", "description": "Image URL" },
+        { "name": "width", "type": "integer", "description": "Image width in pixels" },
+        { "name": "height", "type": "integer", "description": "Image height in pixels" },
+        { "name": "type", "type": "string", "description": "MIME type e.g. image/jpeg" }
+      ]
+    },
+    {
+      "name": "twitter_card",
+      "type": "string",
+      "description": "Twitter Card type",
+      "values": ["summary", "summary_large_image", "app", "player"]
+    },
+    {
+      "name": "twitter_title",
+      "type": "string",
+      "description": "Twitter Card title"
+    },
+    {
+      "name": "twitter_description",
+      "type": "string",
+      "description": "Twitter Card description"
+    },
+    {
+      "name": "twitter_image",
+      "type": "string (URI)",
+      "description": "Twitter Card featured image URL"
+    },
+    {
+      "name": "article_published_time",
+      "type": "string (date-time)",
+      "description": "ISO 8601 article publication timestamp"
+    },
+    {
+      "name": "article_modified_time",
+      "type": "string (date-time)",
+      "description": "ISO 8601 article last-modified timestamp"
+    },
+    {
+      "name": "author",
+      "type": "string",
+      "description": "Article author display name"
+    },
+    {
+      "name": "schema",
+      "type": "object",
+      "description": "Schema.org JSON-LD @graph containing structured data pieces (Article, WebPage, Organization, etc.)"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/yoast/main/json-schema/yoast-seo-metadata-schema.json",
+  "title": "Yoast SEO Metadata",
+  "description": "Schema for SEO metadata returned by the Yoast REST API including meta tags, Open Graph, Twitter Card, and Schema.org structured data",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "SEO page title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Meta description for the page"
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL for the page"
+    },
+    "robots": {
+      "type": "object",
+      "description": "Search engine robots directives",
+      "properties": {
+        "index": {
+          "type": "string",
+          "enum": ["index", "noindex"],
+          "description": "Whether search engines should index this page"
+        },
+        "follow": {
+          "type": "string",
+          "enum": ["follow", "nofollow"],
+          "description": "Whether search engines should follow links on this page"
+        },
+        "max-snippet": {
+          "type": "string",
+          "description": "Maximum snippet length for search results"
+        },
+        "max-image-preview": {
+          "type": "string",
+          "description": "Maximum image preview size"
+        },
+        "max-video-preview": {
+          "type": "string",
+          "description": "Maximum video preview duration"
+        }
+      }
+    },
+    "og_locale": {
+      "type": "string",
+      "description": "Open Graph locale (e.g. en_US)"
+    },
+    "og_type": {
+      "type": "string",
+      "description": "Open Graph type (e.g. article, website)"
+    },
+    "og_title": {
+      "type": "string",
+      "description": "Open Graph title"
+    },
+    "og_description": {
+      "type": "string",
+      "description": "Open Graph description"
+    },
+    "og_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Open Graph URL"
+    },
+    "og_site_name": {
+      "type": "string",
+      "description": "Open Graph site name"
+    },
+    "og_image": {
+      "type": "array",
+      "description": "Open Graph images",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "twitter_card": {
+      "type": "string",
+      "enum": ["summary", "summary_large_image", "app", "player"],
+      "description": "Twitter Card type"
+    },
+    "twitter_title": {
+      "type": "string",
+      "description": "Twitter Card title"
+    },
+    "twitter_description": {
+      "type": "string",
+      "description": "Twitter Card description"
+    },
+    "twitter_image": {
+      "type": "string",
+      "format": "uri",
+      "description": "Twitter Card image URL"
+    },
+    "article_published_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Article published time (ISO 8601)"
+    },
+    "article_modified_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Article last modified time (ISO 8601)"
+    },
+    "author": {
+      "type": "string",
+      "description": "Article author name"
+    },
+    "schema": {
+      "type": "object",
+      "description": "Schema.org JSON-LD structured data graph"
+    }
+  },
+  "additionalProperties": true
+}

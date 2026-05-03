@@ -1,0 +1,80 @@
+extends: spectral:oas
+rules:
+  yoast-operation-summary-title-case:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' must use Title Case"
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*(\\s[A-Z][a-zA-Z0-9]*)*$"
+    severity: warn
+
+  yoast-operation-ids-camel-case:
+    description: Operation IDs should use camelCase
+    message: "OperationId '{{value}}' should use camelCase"
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+    severity: warn
+
+  yoast-all-operations-have-tags:
+    description: All operations must have at least one tag
+    message: "Operation must have at least one tag"
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+    severity: warn
+
+  yoast-all-operations-have-description:
+    description: All operations must have a description
+    message: "Operation must have a description"
+    given: "$.paths[*][*]"
+    then:
+      field: description
+      function: truthy
+    severity: warn
+
+  yoast-responses-have-descriptions:
+    description: All response objects should have descriptions
+    message: "Response must have a description"
+    given: "$.paths[*][*].responses[*]"
+    then:
+      field: description
+      function: truthy
+    severity: warn
+
+  yoast-parameters-have-descriptions:
+    description: All parameters should have descriptions
+    message: "Parameter must have a description"
+    given: "$.paths[*][*].parameters[*]"
+    then:
+      field: description
+      function: truthy
+    severity: warn
+
+  yoast-get-read-only:
+    description: GET operations should not have request bodies
+    message: "GET operation '{{path}}' should not have a requestBody"
+    given: "$.paths[*].get"
+    then:
+      field: requestBody
+      function: falsy
+    severity: error
+
+  yoast-v1-path-prefix:
+    description: Yoast custom endpoints should use /yoast/v1/ prefix
+    message: "Custom Yoast paths should start with /yoast/v1/"
+    given: "$.paths"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            "^/yoast/":
+              type: object
+    severity: hint

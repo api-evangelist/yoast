@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://example.com/wp-json/wp/v2/posts/42",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "id": 42,
+      "date": "2026-01-15T10:00:00",
+      "modified": "2026-04-01T14:30:00",
+      "slug": "seo-tips",
+      "status": "publish",
+      "title": {
+        "rendered": "10 Essential SEO Tips for 2026"
+      },
+      "content": {
+        "rendered": "<p>Search engine optimization is critical for content visibility...</p>"
+      },
+      "excerpt": {
+        "rendered": "<p>Boost your search rankings with these 10 actionable SEO tips for 2026.</p>"
+      },
+      "link": "https://example.com/blog/seo-tips/",
+      "yoast_head": "<title>10 Essential SEO Tips for 2026 - Example Blog</title>\n<meta name=\"description\" content=\"Boost your search rankings with these 10 actionable SEO tips for 2026.\"/>",
+      "yoast_head_json": {
+        "title": "10 Essential SEO Tips for 2026 - Example Blog",
+        "description": "Boost your search rankings with these 10 actionable SEO tips for 2026.",
+        "canonical": "https://example.com/blog/seo-tips/",
+        "robots": {
+          "index": "index",
+          "follow": "follow"
+        },
+        "og_type": "article",
+        "og_title": "10 Essential SEO Tips for 2026",
+        "twitter_card": "summary_large_image"
+      }
+    }
+  }
+}

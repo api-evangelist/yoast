@@ -1,0 +1,68 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://example.com/wp-json/yoast/v1/get_head?url=https://example.com/blog/seo-tips/",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "html": "<title>10 Essential SEO Tips for 2026 - Example Blog</title>\n<meta name=\"description\" content=\"Boost your search rankings with these 10 actionable SEO tips for 2026.\"/>\n<link rel=\"canonical\" href=\"https://example.com/blog/seo-tips/\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"10 Essential SEO Tips for 2026\" />\n<meta property=\"og:description\" content=\"Boost your search rankings with these 10 actionable SEO tips for 2026.\" />\n<meta property=\"og:url\" content=\"https://example.com/blog/seo-tips/\" />\n<meta property=\"og:site_name\" content=\"Example Blog\" />\n<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"10 Essential SEO Tips for 2026\"}</script>",
+      "json": {
+        "title": "10 Essential SEO Tips for 2026 - Example Blog",
+        "description": "Boost your search rankings with these 10 actionable SEO tips for 2026.",
+        "canonical": "https://example.com/blog/seo-tips/",
+        "robots": {
+          "index": "index",
+          "follow": "follow",
+          "max-snippet": "max-snippet:-1",
+          "max-image-preview": "max-image-preview:large",
+          "max-video-preview": "max-video-preview:-1"
+        },
+        "og_locale": "en_US",
+        "og_type": "article",
+        "og_title": "10 Essential SEO Tips for 2026",
+        "og_description": "Boost your search rankings with these 10 actionable SEO tips for 2026.",
+        "og_url": "https://example.com/blog/seo-tips/",
+        "og_site_name": "Example Blog",
+        "og_image": [
+          {
+            "url": "https://example.com/wp-content/uploads/seo-tips.jpg",
+            "width": 1200,
+            "height": 630,
+            "type": "image/jpeg"
+          }
+        ],
+        "twitter_card": "summary_large_image",
+        "twitter_title": "10 Essential SEO Tips for 2026",
+        "twitter_description": "Boost your search rankings with these 10 actionable SEO tips for 2026.",
+        "twitter_image": "https://example.com/wp-content/uploads/seo-tips.jpg",
+        "article_published_time": "2026-01-15T10:00:00+00:00",
+        "article_modified_time": "2026-04-01T14:30:00+00:00",
+        "author": "Jane Doe",
+        "schema": {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "@id": "https://example.com/blog/seo-tips/#article",
+              "headline": "10 Essential SEO Tips for 2026",
+              "description": "Boost your search rankings with these 10 actionable SEO tips.",
+              "url": "https://example.com/blog/seo-tips/",
+              "datePublished": "2026-01-15T10:00:00+00:00",
+              "dateModified": "2026-04-01T14:30:00+00:00",
+              "author": {
+                "@type": "Person",
+                "name": "Jane Doe"
+              }
+            }
+          ]
+        }
+      },
+      "status": 200
+    }
+  }
+}
