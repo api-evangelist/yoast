@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,155 +9,67 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Yoast
 providerId: yoast
-publisherName: Yoast
-serviceCategory: API
+publisherName: Yoast B.V.
+serviceCategory: SEO / Content
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - SEO
   - WordPress
-  - Content Optimization
-  - Schema
-  - Metadata
+  - Plugin
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the Yoast API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: |
+  FOCUS-aligned FinOps view for Yoast: a flat annual plugin licence (per WordPress site /
+  Shopify store) rather than a metered API. Cost surface is dominated by Premium licence
+  renewals plus optional add-on plugins.
+sources:
+  - https://yoast.com/wordpress/plugins/seo/pricing/
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Subscription
+  billingFrequency: Annual
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
     - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: Yoast
-  ServiceCategory: Developer Tools / API
+  ServiceName: Yoast SEO
+  ServiceCategory: SEO / Content
   ProviderName: Yoast
-  PublisherName: Yoast
-  InvoiceIssuerName: Yoast
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Yoast B.V.
+  InvoiceIssuerName: Yoast B.V.
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
-    aggregation: sum
+  - name: premium_site_licences
+    description: Count of active Yoast SEO Premium site licences renewed annually.
+    unit: licence-year
+    aggregation: count
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
+      - product
+      - site
+  - name: addon_licences
+    description: Add-on plugin licences (Local SEO, Video SEO, News SEO, WooCommerce SEO,
+      Yoast SEO for Shopify) purchased separately or as part of bundles.
+    unit: licence-year
+    aggregation: count
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Yoast REST API
-    baseURL: https://{your-site}/wp-json
-    tags:
-      - SEO
-      - REST API
-      - Metadata
-      - WordPress
-      - Headless
-    serviceName: Yoast REST API
-    serviceCategory: API
-  - name: Yoast Surfaces API
-    baseURL: https://{your-site}
-    tags:
-      - SEO
-      - PHP API
-      - Metadata
-      - WordPress
-    serviceName: Yoast Surfaces API
-    serviceCategory: API
-  - name: Yoast Metadata API
-    baseURL: https://{your-site}
-    tags:
-      - SEO
-      - PHP API
-      - Metadata
-      - WordPress
-    serviceName: Yoast Metadata API
-    serviceCategory: API
-  - name: Yoast Schema API
-    baseURL: https://{your-site}
-    tags:
-      - SEO
-      - Schema.org
-      - Structured Data
-      - PHP API
-      - WordPress
-    serviceName: Yoast Schema API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - product
+      - site
+principles:
+  - name: Visibility
+    description: Visibility is invoice-driven via the my.yoast.com account; there is no
+      usage telemetry for the plugin itself.
+  - name: Allocation
+    description: Allocate Yoast spend per WordPress site / brand by tagging each licence
+      to the owning site URL within my.yoast.com.
+  - name: Optimization
+    description: Cost levers are bundle selection (Premium vs Premium + add-ons), multi-site
+      packs, and choosing the free Yoast SEO where Premium features are not needed.
+  - name: Accountability
+    description: Marketing / web ops typically owns Yoast renewal; finance reconciles the
+      annual purchase line on the my.yoast.com invoice.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
