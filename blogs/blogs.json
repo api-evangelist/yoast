@@ -3,11 +3,11 @@
   "feeds": [
     {
       "source": "https://developer.yoast.com/blog/",
-      "feed_url": "https://yoast.com/feed/",
-      "saved": 10,
-      "title": "Yoast"
+      "feed_url": "https://developer.yoast.com/blog/feed/",
+      "title": "Developer blog Archive \u2022 Yoast",
+      "saved": 0
     }
   ],
   "post_count": 10,
-  "fetched": "2026-05-03T23:38:29Z"
+  "fetched": "2026-05-09T20:17:51Z"
 }
