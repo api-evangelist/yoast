@@ -120,6 +120,10 @@ common:
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/vocabulary/yoast-vocabulary.yml
 
+  - type: Integrations
+    url: https://yoast.com/integrations/
+integrations:
+  - name: SEO Checker
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
