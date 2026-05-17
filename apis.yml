@@ -107,7 +107,7 @@ common:
     url: https://developer.yoast.com/
   - type: Documentation
     url: https://developer.yoast.com/customization/apis/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/Yoast
   - type: Blog
     url: https://developer.yoast.com/blog/
