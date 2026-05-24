@@ -113,6 +113,8 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/vocabulary/yoast-vocabulary.yml
   - type: Integrations
     url: https://yoast.com/integrations/
+  - type: LLMsTxt
+    url: https://yoast.com/llms.txt
 integrations:
   - name: SEO Checker
 maintainers:
