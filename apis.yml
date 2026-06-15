@@ -1,9 +1,10 @@
 aid: yoast
 name: Yoast
-description: Yoast is the maker of the world's most popular WordPress SEO plugin, active on over 13 million sites. Yoast provides
-  developer APIs for integrating SEO metadata, structured data (Schema.org), meta tags, sitemaps, and SEO analysis into headless
-  WordPress sites and third-party platforms. Key products include Yoast SEO Free, Yoast SEO Premium, WooCommerce SEO, Local
-  SEO, Video SEO, and News SEO.
+description: >-
+  Yoast is the maker of the world's most popular WordPress SEO plugin, active on over 13 million sites. Yoast provides
+  developer APIs for integrating SEO metadata, structured data (Schema.org), meta tags, sitemaps, and SEO analysis into
+  headless WordPress sites and third-party platforms. Key products include Yoast SEO Free, Yoast SEO Premium,
+  WooCommerce SEO, Local SEO, Video SEO, and News SEO.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -21,75 +22,74 @@ specificationVersion: '0.19'
 apis:
   - aid: yoast:yoast-rest-api
     name: Yoast REST API
-    description: The Yoast REST API returns all SEO metadata (meta tags, Schema.org JSON-LD, canonical URLs, Open Graph, Twitter
-      Card data, and robots directives) for any URL or post on a WordPress site. It extends the native WordPress WP-JSON REST
-      API and also provides a dedicated endpoint at /yoast/v1/get_head. The API is read-only and designed for headless WordPress
-      implementations.
+    description: >-
+      The Yoast REST API returns all SEO metadata (meta tags, Schema.org JSON-LD, canonical URLs, Open Graph, Twitter
+      Card data, and robots directives) for any URL or post on a WordPress site. It extends the native WordPress WP-JSON
+      REST API and also provides a dedicated endpoint at /yoast/v1/get_head. The API is read-only and designed for
+      headless WordPress implementations.
     humanURL: https://developer.yoast.com/customization/apis/rest-api/
     baseURL: https://{your-site}/wp-json
     tags:
-    - SEO
-    - REST API
-    - Metadata
-    - WordPress
-    - Headless
+      - SEO
+      - REST API
+      - Metadata
+      - WordPress
+      - Headless
     properties:
-    - type: Documentation
-      url: https://developer.yoast.com/customization/apis/rest-api/
-    - type: OpenAPI
-      url: https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/openapi/yoast-rest-openapi.yml
-    - type: NaftikoCapability
-      url: capabilities/rest-pages.yaml
-    - type: NaftikoCapability
-      url: capabilities/rest-posts.yaml
-    - type: NaftikoCapability
-      url: capabilities/rest-seo-head.yaml
+      - type: Documentation
+        url: https://developer.yoast.com/customization/apis/rest-api/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/openapi/yoast-rest-openapi.yml
   - aid: yoast:yoast-surfaces-api
     name: Yoast Surfaces API
-    description: The Yoast Surfaces API provides a PHP interface for retrieving SEO metadata programmatically within WordPress.
-      It exposes the YoastSEO() surface with methods to get metadata for the current page, a specific post by ID, or a given
-      URL. Returns titles, descriptions, Schema arrays, canonical URLs, robots directives, OpenGraph, and Twitter card data.
+    description: >-
+      The Yoast Surfaces API provides a PHP interface for retrieving SEO metadata programmatically within WordPress. It
+      exposes the YoastSEO() surface with methods to get metadata for the current page, a specific post by ID, or a
+      given URL. Returns titles, descriptions, Schema arrays, canonical URLs, robots directives, OpenGraph, and Twitter
+      card data.
     humanURL: https://developer.yoast.com/customization/apis/surfaces-api/
     baseURL: https://{your-site}
     tags:
-    - SEO
-    - PHP API
-    - Metadata
-    - WordPress
+      - SEO
+      - PHP API
+      - Metadata
+      - WordPress
     properties:
-    - type: Documentation
-      url: https://developer.yoast.com/customization/apis/surfaces-api/
+      - type: Documentation
+        url: https://developer.yoast.com/customization/apis/surfaces-api/
   - aid: yoast:yoast-metadata-api
     name: Yoast Metadata API
-    description: The Yoast Metadata API provides a PHP interface to add, alter, or remove metadata in the <head> of a WordPress
-      document. Developers can hook into Yoast's meta tag output pipeline to customize titles, descriptions, robots directives,
-      Open Graph tags, and other head elements programmatically.
+    description: >-
+      The Yoast Metadata API provides a PHP interface to add, alter, or remove metadata in the <head> of a WordPress
+      document. Developers can hook into Yoast's meta tag output pipeline to customize titles, descriptions, robots
+      directives, Open Graph tags, and other head elements programmatically.
     humanURL: https://developer.yoast.com/customization/apis/metadata-api/
     baseURL: https://{your-site}
     tags:
-    - SEO
-    - PHP API
-    - Metadata
-    - WordPress
+      - SEO
+      - PHP API
+      - Metadata
+      - WordPress
     properties:
-    - type: Documentation
-      url: https://developer.yoast.com/customization/apis/metadata-api/
+      - type: Documentation
+        url: https://developer.yoast.com/customization/apis/metadata-api/
   - aid: yoast:yoast-schema-api
     name: Yoast Schema API
-    description: The Yoast Schema API provides a PHP interface for customizing the Schema.org JSON-LD structured data output
-      generated by Yoast SEO. Developers can add, remove, or modify schema pieces such as Organization, WebSite, Article, BreadcrumbList,
-      and more to control how search engines interpret page content.
+    description: >-
+      The Yoast Schema API provides a PHP interface for customizing the Schema.org JSON-LD structured data output
+      generated by Yoast SEO. Developers can add, remove, or modify schema pieces such as Organization, WebSite,
+      Article, BreadcrumbList, and more to control how search engines interpret page content.
     humanURL: https://developer.yoast.com/customization/apis/schema-api/
     baseURL: https://{your-site}
     tags:
-    - SEO
-    - Schema.org
-    - Structured Data
-    - PHP API
-    - WordPress
+      - SEO
+      - Schema.org
+      - Structured Data
+      - PHP API
+      - WordPress
     properties:
-    - type: Documentation
-      url: https://developer.yoast.com/customization/apis/schema-api/
+      - type: Documentation
+        url: https://developer.yoast.com/customization/apis/schema-api/
 common:
   - type: LinkedIn
     url: https://www.linkedin.com/company/yoast-com

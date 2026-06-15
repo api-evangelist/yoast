@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Yoast REST API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SEO Head",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get SEO Head for URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/yoast/v1/get_head",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The full URL of the page to retrieve SEO metadata for"
+              }
+            ]
+          },
+          "docs": "Returns all SEO metadata for a given URL including meta tags, Schema.org JSON-LD structured data, canonical URL, robots directives, Open Graph tags, and Twitter Card data. This is the primary endpoint for headless WordPress implementations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Posts With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/posts",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by post slug"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of posts per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns WordPress posts with Yoast SEO metadata appended. Each post in the response includes yoast_head (HTML meta tags and Schema.org output) and yoast_head_json (structured key/value SEO data)."
+        },
+        {
+          "info": {
+            "name": "Get Post With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/posts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "WordPress post ID"
+              }
+            ]
+          },
+          "docs": "Returns a single WordPress post with Yoast SEO metadata including yoast_head (HTML output) and yoast_head_json (structured SEO data object)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Pages With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/pages",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by page slug"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of pages per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns WordPress pages with Yoast SEO metadata appended. Each page includes yoast_head and yoast_head_json fields."
+        },
+        {
+          "info": {
+            "name": "Get Page With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "WordPress page ID"
+              }
+            ]
+          },
+          "docs": "Returns a single WordPress page with Yoast SEO metadata including yoast_head and yoast_head_json fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
