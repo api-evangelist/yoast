@@ -95,7 +95,7 @@ common:
     url: https://www.linkedin.com/company/yoast-com
   - type: Website
     url: https://yoast.com/
-  - type: Developer Portal
+  - type: DeveloperPortal
     url: https://developer.yoast.com/
   - type: Documentation
     url: https://developer.yoast.com/customization/apis/
@@ -113,7 +113,7 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/vocabulary/yoast-vocabulary.yml
   - type: Integrations
     url: https://yoast.com/integrations/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://yoast.com/llms.txt
 integrations:
   - name: SEO Checker
