@@ -91,6 +91,10 @@ apis:
       - type: Documentation
         url: https://developer.yoast.com/customization/apis/schema-api/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/yoast-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/yoast-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/yoast-com
   - type: Website
