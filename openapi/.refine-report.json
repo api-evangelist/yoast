@@ -1,0 +1,18 @@
+{
+  "provider": "yoast",
+  "sources": [
+    "yoast-pages-api-openapi.yml",
+    "yoast-posts-api-openapi.yml",
+    "yoast-seo-head-api-openapi.yml"
+  ],
+  "outputs": [
+    "yoast-pages-api-openapi.yml",
+    "yoast-posts-api-openapi.yml",
+    "yoast-seo-head-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
