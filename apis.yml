@@ -1,10 +1,16 @@
 aid: yoast
 name: Yoast
 description: >-
-  Yoast is the maker of the world's most popular WordPress SEO plugin, active on over 13 million sites. Yoast provides
-  developer APIs for integrating SEO metadata, structured data (Schema.org), meta tags, sitemaps, and SEO analysis into
-  headless WordPress sites and third-party platforms. Key products include Yoast SEO Free, Yoast SEO Premium,
-  WooCommerce SEO, Local SEO, Video SEO, and News SEO.
+  Yoast is the maker of the world's most popular WordPress SEO plugin, active on over 13 million sites, and is part of
+  Newfold Digital. Yoast provides developer APIs for integrating SEO metadata, structured data (Schema.org), meta tags,
+  sitemaps, and SEO analysis into headless WordPress sites and third-party platforms. Most of that surface ships as
+  plugin code and runs on the customer's own WordPress install: the Yoast REST API (/wp-json/yoast/v1/get_head plus
+  yoast_head_json on WP posts and pages), the Schema Aggregator API that emits a site's whole Schema.org graph as
+  JSON-L, the Surfaces, Metadata and Schema PHP APIs, and — since Yoast SEO 27.5 — three read-only WordPress Abilities
+  that hand SEO, readability and inclusive-language scores to AI agents. Yoast additionally operates one hosted API of
+  its own, the MyYoast Provisioning (Subscription) API at my.yoast.com, a partner-gated Basic Auth surface for
+  resellers, backed by an OpenID Connect issuer with dynamic client registration, PKCE and DPoP. Key products include
+  Yoast SEO Free, Yoast SEO Premium, Yoast SEO for Shopify, WooCommerce SEO, Local SEO, Video SEO, and News SEO.
 type: Index
 accessModel:
   pricing: freemium
@@ -27,8 +33,13 @@ tags:
   - Content Optimization
   - Schema
   - Metadata
+  - Structured Data
+  - Headless CMS
+  - Content Analysis
+  - Agent Readiness
+  - Plugins
 created: '2025-01-14'
-modified: '2026-05-19'
+modified: '2026-08-13'
 url: https://raw.githubusercontent.com/api-evangelist/yoast/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
@@ -92,6 +103,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/yoast-pages-api-openapi.yml
+  - type: Overlay
+    url: overlays/yoast-pages-overlay.yaml
   - type: Documentation
     url: https://developer.yoast.com/customization/apis/rest-api/
 - aid: yoast:yoast-posts-api
@@ -104,6 +117,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/yoast-posts-api-openapi.yml
+  - type: Overlay
+    url: overlays/yoast-posts-overlay.yaml
   - type: Documentation
     url: https://developer.yoast.com/customization/apis/rest-api/
 - aid: yoast:yoast-seo-head-api
@@ -116,8 +131,79 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/yoast-seo-head-api-openapi.yml
+  - type: Overlay
+    url: overlays/yoast-seo-head-overlay.yaml
   - type: Documentation
     url: https://developer.yoast.com/customization/apis/rest-api/
+- aid: yoast:yoast-abilities-api
+  name: Yoast SEO Abilities API
+  description: >-
+    Yoast SEO registers its content-analysis results as WordPress Abilities (the Abilities API introduced in
+    WordPress 6.9), making them discoverable and executable over the WordPress REST API by AI agents and third-party
+    systems. Three read-only abilities — yoast-seo/get-seo-scores, yoast-seo/get-readability-scores and
+    yoast-seo/get-inclusive-language-scores — return the analysis scores of the most recently modified posts.
+  humanURL: https://developer.yoast.com/features/yoast-seo-abilities/overview/
+  baseURL: https://{your-site}/wp-json
+  tags:
+  - Abilities
+  - Agent Readiness
+  - Content Analysis
+  - WordPress
+  properties:
+  - type: OpenAPI
+    url: openapi/yoast-abilities-api-openapi.yml
+  - type: Overlay
+    url: overlays/yoast-abilities-overlay.yaml
+  - type: Documentation
+    url: https://developer.yoast.com/features/yoast-seo-abilities/overview/
+  - type: APIReference
+    url: https://developer.yoast.com/features/yoast-seo-abilities/analysis-scores/
+- aid: yoast:yoast-schema-aggregator-api
+  name: Yoast Schema Aggregator API
+  description: >-
+    The Yoast Schema Aggregator exposes a site's aggregated Schema.org structured data over the WordPress REST API as
+    paginated JSON-L, plus an XML schemamap listing every available schema endpoint on the site — the structured-data
+    equivalent of an XML sitemap, aimed at search engines and AI crawlers that want a site's entity graph in one place.
+  humanURL: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+  baseURL: https://{your-site}/wp-json
+  tags:
+  - Schema.org
+  - Structured Data
+  - JSON-LD
+  - WordPress
+  properties:
+  - type: OpenAPI
+    url: openapi/yoast-schema-aggregator-openapi.yml
+  - type: Overlay
+    url: overlays/yoast-schema-aggregator-overlay.yaml
+  - type: Documentation
+    url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+- aid: yoast:myyoast-provisioning-api
+  name: MyYoast Provisioning API
+  description: >-
+    The MyYoast Provisioning API (also called the Subscription API) is the one API Yoast hosts itself. It lets an
+    approved Yoast provisioning partner create, read, renew, cancel, refund and site-link Yoast product subscriptions
+    on behalf of their customers, retrieve the current plugin version and download URLs for a product code, schedule a
+    GDPR delete for a customer, and rotate their own provisioner Basic Auth password. Credentials are issued by Yoast
+    to provisioners only.
+  humanURL: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  baseURL: https://my.yoast.com
+  tags:
+  - Subscriptions
+  - Provisioning
+  - Partner API
+  - Licensing
+  properties:
+  - type: OpenAPI
+    url: openapi/yoast-myyoast-provisioning-openapi.yml
+  - type: Overlay
+    url: overlays/yoast-myyoast-provisioning-overlay.yaml
+  - type: Documentation
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  - type: OpenIDConnect
+    url: well-known/yoast-openid-configuration.json
+  - type: SourceCode
+    url: https://github.com/Yoast/subscription-api-php-client
 common:
   - type: AgenticAccess
     url: agentic-access/yoast-agentic-access.yml
@@ -149,8 +235,95 @@ common:
     url: https://yoast.com/integrations/
   - type: LlmsText
     url: https://yoast.com/llms.txt
+  - type: LLMsTxt
+    url: llms/yoast-llms.txt
+  - type: APIReference
+    url: https://developer.yoast.com/customization/apis/overview/
+  - type: GettingStarted
+    url: https://developer.yoast.com/customization/apis/using-apis-classes/
+  - type: Support
+    url: https://yoast.com/help/
+  - type: Signup
+    url: https://my.yoast.com/login
+  - type: Login
+    url: https://my.yoast.com/login
+  - type: TermsOfService
+    url: https://yoast.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://yoast.com/privacy-policy/
+  - type: Security
+    url: https://yoast.com/security-program/
+  - type: StatusPage
+    url: https://status.yoast.com
+  - type: Deprecation
+    url: https://github.com/Yoast/wordpress-seo/blob/trunk/DEPRECATING.md
+  - type: DeprecationPolicy
+    url: https://github.com/Yoast/wordpress-seo/blob/trunk/DEPRECATING.md
+  - type: Versioning
+    url: https://developer.yoast.com/development/standards/version-control-conventions/
+  - type: WellKnown
+    url: well-known/yoast-well-known.yml
+  - type: SecurityTxt
+    url: well-known/yoast-security.txt
+  - type: OpenIDConnect
+    url: well-known/yoast-openid-configuration.json
+  - type: Packages
+    url: packages/yoast-packages.yml
+  - type: SDKs
+    url: packages/yoast-packages.yml
+  - type: Authentication
+    url: authentication/yoast-authentication.yml
+  - type: OAuthScopes
+    url: scopes/yoast-scopes.yml
+  - type: Conformance
+    url: conformance/yoast-conformance.yml
+  - type: ErrorCatalog
+    url: errors/yoast-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/yoast-lifecycle.yml
+  - type: Conventions
+    url: conventions/yoast-conventions.yml
+  - type: ChangeLog
+    url: changelog/yoast-changelog.yml
+  - type: CLI
+    url: cli/yoast-cli.yml
+  - type: Components
+    url: components/yoast-components.yml
+  - type: DataModel
+    url: data-model/yoast-data-model.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: AgentSkills
+    url: skills/_index.yml
+  - type: MCP
+    url: mcp/yoast-mcp.yml
+  - type: MCPServer
+    url: mcp/yoast-mcp.yml
+  - type: Plans
+    url: plans/yoast-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/yoast-rate-limits.yml
+  - type: FinOps
+    url: finops/yoast-finops.yml
+  - type: SpectralRules
+    url: rules/yoast-rules.yml
+  - type: JSONSchema
+    url: json-schema/yoast-seo-metadata-schema.json
+  - type: JSONStructure
+    url: json-structure/yoast-seo-metadata-structure.json
+  - type: JSONLDContext
+    url: json-ld/yoast-context.jsonld
+  - type: Examples
+    url: examples/yoast-rest-get-seo-head-example.json
+  - type: Examples
+    url: examples/yoast-rest-get-post-seo-example.json
 integrations:
   - name: SEO Checker
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 31
+  pass: local-v1
