@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Yoast REST Pages SEO Head API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SEO Head",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get SEO Head for URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/yoast/v1/get_head",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The full URL of the page to retrieve SEO metadata for"
+              }
+            ]
+          },
+          "docs": "Returns all SEO metadata for a given URL including meta tags, Schema.org JSON-LD structured data, canonical URL, robots directives, Open Graph tags, and Twitter Card data. This is the primary endpoint for headless WordPress implementations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

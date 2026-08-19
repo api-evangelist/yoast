@@ -1,0 +1,63 @@
+generated: '2026-08-13'
+method: probed
+source: https://my.yoast.com/.well-known/openid-configuration
+docs: https://developer.yoast.com/features/wp-cli/auth/
+note: >-
+  derive-oauth-scopes.py found no oauth2 securityScheme in any OpenAPI in this repo, and
+  that is correct — the MyYoast Provisioning API is Basic Auth. The scopes below are NOT
+  derived from a spec; they were read live from the MyYoast OpenID Connect discovery
+  document at https://my.yoast.com/.well-known/openid-configuration (HTTP 200,
+  application/json). They are the standard OIDC scope set: MyYoast issues identity
+  tokens for the Yoast SEO plugin's site/user authentication, and publishes no
+  product-specific scopes (nothing like seo:read or subscriptions:write). An integrator
+  cannot request granular Yoast permissions, because none are advertised.
+issuer: https://my.yoast.com
+schemes:
+  - name: MyYoast OpenID Connect
+    type: openIdConnect
+    source: well-known/yoast-openid-configuration.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://my.yoast.com/api/oauth/auth
+        tokenUrl: https://my.yoast.com/api/oauth/token
+        pkce: S256
+      - flow: clientCredentials
+        tokenUrl: https://my.yoast.com/api/oauth/token
+      - flow: refreshToken
+        tokenUrl: https://my.yoast.com/api/oauth/token
+scopes:
+  - name: openid
+    description: Standard OIDC scope; requests an ID token identifying the subject.
+    standard: true
+  - name: profile
+    description: Standard OIDC scope; basic profile claims.
+    standard: true
+  - name: email
+    description: Standard OIDC scope; email claims.
+    standard: true
+  - name: phone
+    description: Standard OIDC scope; phone claims.
+    standard: true
+  - name: address
+    description: Standard OIDC scope; address claims.
+    standard: true
+  - name: offline_access
+    description: Standard OIDC scope; requests a refresh token for long-lived access.
+    standard: true
+claims_supported:
+  - sub
+  - sid
+  - auth_time
+  - iss
+scope_count: 6
+product_specific_scope_count: 0
+gaps:
+  - >-
+    Every advertised scope is a standard OIDC scope. MyYoast publishes no
+    product-permission scopes, so an authorized client's actual authority over Yoast
+    resources is not expressible or inspectable through the scope model.
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://my.yoast.com/.well-known/openid-configuration
+  http_status: 200
+  content_type: application/json; charset=utf-8

@@ -1,0 +1,113 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.yoast.com/changelog/
+note: >-
+  Yoast versions the PRODUCT, not the API. There is a dated, per-product changelog going
+  back years and a real Atlassian Statuspage, but the API surfaces themselves carry only
+  a path version (yoast/v1, wp/v2, and a v2 variant of one provisioning download route)
+  and no published deprecation window. Deprecations are announced in release notes and
+  in a per-version deprecations page rather than through Sunset/Deprecation headers.
+versioning:
+  scheme: semver-product
+  note: >-
+    Yoast SEO releases on MAJOR.MINOR (currently in the 28.x line) roughly every two
+    weeks. API routes are versioned in the path independently of the plugin version.
+  current_product_version: '28.2'
+  current_product_release_date: '2026-08-04'
+  api_versions:
+    - api: Yoast REST API
+      version: v1
+      path_prefix: /wp-json/yoast/v1
+    - api: WordPress post/page SEO fields
+      version: v2
+      path_prefix: /wp-json/wp/v2
+      note: WordPress core's version, not Yoast's
+    - api: Yoast SEO Abilities API
+      version: v1
+      path_prefix: /wp-json/wp-abilities/v1
+      note: WordPress core's Abilities API version, not Yoast's
+    - api: MyYoast Provisioning API
+      version: '1.0.0'
+      note: >-
+        Declared by the generated client. Routes are unversioned except
+        /api/v2/provisioning/downloads/currentVersion, which coexists with the v1 route
+        rather than replacing it.
+  docs: https://developer.yoast.com/development/standards/version-control-conventions/
+deprecation:
+  policy_url: https://github.com/Yoast/wordpress-seo/blob/trunk/DEPRECATING.md
+  docs_url: https://developer.yoast.com/customization/yoast-seo/api-filter-actions-deprecations/
+  premium_docs_url: https://developer.yoast.com/customization/yoast-seo-premium/api-filter-actions-deprecations/
+  policy_published: true
+  policy_location: source repository, not the developer portal
+  retention_window: 12 months
+  removal_cadence: annual cleanup
+  policy_quote: >-
+    Once a year, all deprecated functionality older than one year is removed. To find the
+    cutoff: identify the plugin version released ~12 months ago; remove everything
+    deprecated before that version.
+  sunset_header: false
+  deprecation_header: false
+  runtime_signal: >-
+    PHP-level, not HTTP-level. Deprecated methods and classes call
+    _deprecated_function( __METHOD__, 'Yoast SEO X.Y', 'Alternative' ) as the first line
+    of the body, deprecated hooks are re-emitted through do_action_deprecated /
+    apply_filters_deprecated with the same version string, and PHPDoc carries @deprecated
+    X.Y. A consumer therefore learns about a deprecation from a WordPress notice in their
+    own error log, never from a response header.
+  pre_removal_outreach: >-
+    Before deprecating, Yoast searches third-party usage on Veloria (formerly
+    WPDirectory) and GitHub, and considers notifying an actively supported dependent
+    plugin's maintainer before the RC1 cut.
+  note: >-
+    This is a real, dated deprecation policy with a stated retention window — but it
+    lives in DEPRECATING.md in the wordpress-seo source repository, not on the developer
+    portal, and it governs PHP symbols (methods, classes, filters, actions) rather than
+    HTTP routes. No Yoast HTTP API has ever been deprecated through it, and no response
+    carries an RFC 8594 Sunset or Deprecation header. The developer-portal pages listed
+    above enumerate what was deprecated in a given version; the policy that governs them
+    is only discoverable by reading the repo.
+  examples:
+    - name: wpseo_twitter_taxonomy_image
+      kind: filter
+      deprecated_in: '14.0'
+      replacement: wpseo_twitter_image
+    - name: wpseo_twitter_metatag_key
+      kind: filter
+      deprecated_in: '14.0'
+      replacement: null
+      guidance: use a metadata presenter instead
+    - name: wpseo_opengraph
+      kind: action
+      deprecated_in: '14.0'
+      replacement: null
+      guidance: use a metadata presenter instead
+    - name: wpseo_twitter
+      kind: action
+      deprecated_in: '14.0'
+      replacement: null
+      guidance: use a metadata presenter instead
+deprecated_operations: []
+status_page: https://status.yoast.com
+status_page_platform: Atlassian Statuspage
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No SLA or uptime commitment is published. Yoast sells a plugin licence rather than a
+    hosted API, so most of the runtime belongs to the customer's own host; the one Yoast
+    hosts (my.yoast.com) carries no published availability target.
+support:
+  channel: https://yoast.com/help/
+  premium: 24/7 support included with Yoast SEO Premium
+changelog: changelog/yoast-changelog.yml
+x-evidence:
+  - url: https://status.yoast.com
+    http_status: 200
+    note: Atlassian Statuspage, title "Yoast Status"
+  - url: https://developer.yoast.com/changelog/
+    http_status: 200
+  - url: https://developer.yoast.com/customization/yoast-seo/api-filter-actions-deprecations/
+    http_status: 200
+  - url: https://yoast.com/roadmap/
+    http_status: 404
+    note: no public roadmap; checked developer.yoast.com/roadmap/ too (404)

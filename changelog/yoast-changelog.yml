@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.yoast.com/changelog/yoast-seo/
+index: https://developer.yoast.com/changelog/
+note: >-
+  Yoast publishes a dated changelog per product on the developer portal — Yoast SEO,
+  Yoast SEO Premium, Local SEO, News SEO, Video SEO, WooCommerce SEO, Duplicate Post,
+  Yoast SEO for Shopify and AI Brand Insights each have their own stream. The entries
+  below are the recent window of the flagship Yoast SEO stream. Entries are categorised
+  as Enhancements / Bugfixes / Other; breaking changes are not called out as a separate
+  class, which is why lifecycle/ records deprecation policy as unpublished.
+scheme: semver
+cadence: roughly every two weeks
+current_version: '28.2'
+current_version_date: '2026-08-04'
+products:
+  - name: Yoast SEO
+    url: https://developer.yoast.com/changelog/yoast-seo/
+  - name: Yoast SEO Premium
+    url: https://developer.yoast.com/changelog/yoast-seo-premium/
+  - name: Local SEO
+    url: https://developer.yoast.com/changelog/local-seo/
+  - name: News SEO
+    url: https://developer.yoast.com/changelog/news-seo/
+  - name: Video SEO
+    url: https://developer.yoast.com/changelog/video-seo/
+  - name: WooCommerce SEO
+    url: https://developer.yoast.com/changelog/woocommerce-seo/
+  - name: Duplicate Post
+    url: https://developer.yoast.com/changelog/duplicate-post/
+  - name: Yoast SEO for Shopify
+    url: https://developer.yoast.com/changelog/yoast-seo-shopify/
+  - name: AI Brand Insights
+    url: https://developer.yoast.com/changelog/ai-brand-insights/
+entries:
+  - version: '28.2'
+    date: '2026-08-04'
+    breaking: false
+    highlights:
+      - Fixed focus keyphrases without function words incorrectly lowering SEO scores
+      - Fixed a fatal error in the post editor for OAuth users when AUTH_KEY was not a string
+      - Yoast SEO Abilities are no longer registered when indexables are disabled
+  - version: '28.1'
+    date: '2026-07-21'
+    breaking: false
+    highlights:
+      - Redesigned the bulk editor page for editing metadata across multiple posts
+  - version: '28.0'
+    date: '2026-07-06'
+    breaking: false
+    highlights:
+      - Improved compatibility with Elementor V4's atomic editor
+      - Fixed block-editor links writing raw type/id instead of data-type/data-id
+      - Updated security-patched guzzlehttp dependencies
+  - version: '27.9'
+    date: '2026-06-22'
+    breaking: false
+    highlights:
+      - Content analysis performance improved by reusing the HTML tree
+      - Shortcodes now passed through to the Insights analysis
+      - Fixed duplicate fetching of recently modified posts in the Content Planner
+  - version: '27.6'
+    date: '2026-05-12'
+    breaking: false
+    highlights:
+      - Introduced the AI Content Planner, generating five site-specific post ideas and a structured starter draft
+  - version: '27.5'
+    date: '2026-04-28'
+    breaking: false
+    additions:
+      - Yoast Abilities API — read SEO, readability and inclusive-language scores over the WordPress Abilities API
+    highlights:
+      - Added the Yoast Abilities API for retrieving analysis scores
+      - Qatar added to Semrush keyphrase suggestions
+      - Fixed AI Generator failures after a domain change caused by stale callback URLs
+    note: >-
+      This is the release that gave Yoast an agent-readable surface; it is the single
+      most consequential entry in this window for API and agent consumers.
+counts:
+  entries: 6
+  window_start: '2026-04-28'
+  window_end: '2026-08-04'

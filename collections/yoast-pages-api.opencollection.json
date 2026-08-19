@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Yoast REST Pages API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Pages With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/pages",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by page slug"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of pages per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns WordPress pages with Yoast SEO metadata appended. Each page includes yoast_head and yoast_head_json fields."
+        },
+        {
+          "info": {
+            "name": "Get Page With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "WordPress page ID"
+              }
+            ]
+          },
+          "docs": "Returns a single WordPress page with Yoast SEO metadata including yoast_head and yoast_head_json fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

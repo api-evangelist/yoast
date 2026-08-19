@@ -1,0 +1,210 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ in this repo
+note: >-
+  Derived from the $ref graph and id-reference fields across the six OpenAPIs in this
+  repo. Two disjoint models exist and never touch each other: the CONTENT model on the
+  customer's WordPress install (posts and pages carrying a Yoast SEO metadata object,
+  plus the aggregated Schema.org graph), and the COMMERCE model on my.yoast.com
+  (subscriptions, products, sites). There is no identifier that joins them — a
+  subscription's siteUrl is a URL string, not a handle on anything the content APIs
+  expose — so a consumer cannot ask "what is the SEO state of the site this subscription
+  paid for" through the published contracts.
+domains:
+  - name: content
+    host: "https://{site}/wp-json"
+    owner: customer WordPress install
+  - name: commerce
+    host: https://my.yoast.com
+    owner: Yoast
+entities:
+  - name: Post
+    domain: content
+    id_field: id
+    id_type: integer
+    source: openapi/yoast-posts-api-openapi.yml#/components/schemas/PostWithSeo
+    fields:
+      - id
+      - date
+      - modified
+      - slug
+      - status
+      - title.rendered
+      - content.rendered
+      - excerpt.rendered
+      - link
+      - yoast_head
+      - yoast_head_json
+  - name: Page
+    domain: content
+    id_field: id
+    id_type: integer
+    source: openapi/yoast-pages-api-openapi.yml#/components/schemas/PageWithSeo
+    fields:
+      - id
+      - date
+      - modified
+      - slug
+      - status
+      - title.rendered
+      - content.rendered
+      - link
+      - yoast_head
+      - yoast_head_json
+  - name: SeoMetadata
+    domain: content
+    id_field: null
+    source: openapi/_original/yoast-rest-openapi.yml#/components/schemas/SeoMetadata
+    description: >-
+      The structured SEO payload Yoast attaches to every indexable object — title,
+      description, canonical, robots directives, the Open Graph set, the Twitter Card
+      set, article timestamps, author, and the Schema.org graph. This is the single most
+      reused schema in the Yoast surface.
+    fields:
+      - title
+      - description
+      - canonical
+      - robots
+      - og_locale
+      - og_type
+      - og_title
+      - og_description
+      - og_url
+      - og_site_name
+      - og_image[]
+      - twitter_card
+      - twitter_title
+      - twitter_description
+      - twitter_image
+      - article_published_time
+      - article_modified_time
+      - author
+      - schema
+  - name: SeoHeadResponse
+    domain: content
+    id_field: null
+    source: openapi/yoast-seo-head-api-openapi.yml#/components/schemas/SeoHeadResponse
+    fields:
+      - html
+      - json
+      - status
+  - name: AnalysisScore
+    domain: content
+    id_field: null
+    source: openapi/yoast-abilities-api-openapi.yml#/components/schemas/AnalysisScore
+    description: >-
+      A per-post analysis result returned by the Abilities API. Keyed only by post
+      TITLE, not by post id — which is the notable modelling weakness on Yoast's
+      agent-facing surface, because an agent cannot reliably join a score back to the
+      post it came from.
+    fields:
+      - title
+      - score
+      - label
+  - name: SeoScore
+    domain: content
+    extends: AnalysisScore
+    source: openapi/yoast-abilities-api-openapi.yml#/components/schemas/SeoScore
+    fields:
+      - focus_keyphrase
+  - name: SchemaGraph
+    domain: content
+    id_field: null
+    source: openapi/yoast-schema-aggregator-openapi.yml#getAggregatedSchema
+    description: >-
+      One Schema.org @graph per line of JSON-L, aggregated over a post type. The Schema
+      pieces Yoast emits (Organization, WebSite, WebPage, Article, BreadcrumbList,
+      Person, Product, Offer, Review, Question, HowTo, Recipe, Video, Event,
+      LocalBusiness, PostalAddress, Comment, Image, SearchAction, ProductGroup,
+      AggregateOffer) are documented individually at developer.yoast.com/features/schema/pieces/.
+  - name: Subscription
+    domain: commerce
+    id_field: iD
+    id_type: string
+    source: openapi/yoast-myyoast-provisioning-openapi.yml#/components/schemas/SubscriptionProvisioningResponseDto
+    fields:
+      - iD
+      - subscriptionNumber
+      - status
+      - startDate
+      - endDate
+      - pluginDownloadUrls[]
+      - siteUrl
+  - name: ProductVersion
+    domain: commerce
+    id_field: slug
+    id_type: string
+    source: openapi/yoast-myyoast-provisioning-openapi.yml#/components/schemas/ProductVersionDto
+    fields:
+      - name
+      - slug
+      - version
+      - downloadUrl
+  - name: ProductVersions
+    domain: commerce
+    source: openapi/yoast-myyoast-provisioning-openapi.yml#/components/schemas/ProductVersionsDto
+    fields:
+      - versions[]
+relationships:
+  - from: Post
+    to: SeoMetadata
+    type: has_one
+    via: yoast_head_json
+    evidence: $ref from PostWithSeo.yoast_head_json to SeoMetadata
+  - from: Page
+    to: SeoMetadata
+    type: has_one
+    via: yoast_head_json
+    evidence: $ref from PageWithSeo.yoast_head_json to SeoMetadata
+  - from: SeoHeadResponse
+    to: SeoMetadata
+    type: has_one
+    via: json
+    evidence: $ref from SeoHeadResponse.json to SeoMetadata
+  - from: SeoScore
+    to: AnalysisScore
+    type: extends
+    via: allOf
+    evidence: SeoScore composes AnalysisScore and adds focus_keyphrase
+  - from: ProductVersions
+    to: ProductVersion
+    type: has_many
+    via: versions
+    evidence: array of $ref
+  - from: Subscription
+    to: ProductVersion
+    type: belongs_to
+    via: productCode
+    confidence: medium
+    evidence: >-
+      CreateProvisionedSubscriptionDto.productCode and the downloads routes both key on
+      productCode, but the response DTO does not echo it back, so the link is one-way
+  - from: Subscription
+    to: Site
+    type: has_one
+    via: siteUrl
+    confidence: low
+    evidence: >-
+      set-site links a subscription to a customer's website, but the site is modelled as
+      a bare URL string with no entity behind it
+id_domains:
+  - entity: Post
+    format: WordPress integer post ID; unique per site, meaningless across sites
+  - entity: Subscription
+    format: opaque string; a separate human-facing subscriptionNumber is also returned
+  - entity: ProductVersion
+    format: product slug plus a productCode used at creation time
+gaps:
+  - >-
+    No identifier joins the commerce domain to the content domain; siteUrl is a string.
+  - >-
+    The Abilities API returns scores keyed by post title rather than post id, so an agent
+    cannot deterministically map a score to a post.
+  - >-
+    Subscription.startDate and endDate are integers (Unix timestamps) while every content
+    timestamp is an ISO 8601 string — two time conventions in one provider.
+render: null
+counts:
+  entities: 10
+  relationships: 7
+  domains: 2

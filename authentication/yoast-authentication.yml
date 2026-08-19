@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/yoast-myyoast-provisioning-openapi.yml
+docs:
+  - https://developer.yoast.com/customization/apis/rest-api/
+  - https://developer.yoast.com/features/wp-cli/auth/
+  - https://my.yoast.com/.well-known/openid-configuration
+note: >-
+  Yoast has three distinct authentication stories, and conflating them is the usual
+  mistake. (1) The Yoast REST API, Schema Aggregator and Abilities endpoints run on the
+  CUSTOMER's WordPress install, so authentication is WordPress's, not Yoast's — the
+  get_head and yoast_head_json read paths are public on a public post, and anything
+  requiring a logged-in user rides WordPress cookies/nonces or Application Passwords.
+  Yoast documents no auth for the read-only REST surface because there is none to
+  document. (2) The MyYoast Provisioning API on my.yoast.com is HTTP Basic with
+  partner-issued credentials, self-rotatable via POST /api/provisioning/account/
+  regenerate-token. (3) my.yoast.com is ALSO a full OpenID Connect provider — probed live
+  at /.well-known/openid-configuration — which is what Yoast SEO's `wp yoast auth`
+  WP-CLI commands use to enrol a site as an OAuth client via RFC 7591 dynamic client
+  registration and then obtain tokens. That third surface is the modern one and is
+  markedly stronger than the Basic Auth on the provisioning API it sits next to.
+summary:
+  types:
+    - http
+    - openIdConnect
+    - none
+  strongest: openIdConnect
+schemes:
+  - name: basic
+    type: http
+    scheme: basic
+    api: MyYoast Provisioning API
+    description: >-
+      HTTP Basic authentication with provisioner credentials issued by Yoast to approved
+      provisioning partners. The password can be rotated with
+      POST /api/provisioning/account/regenerate-token, which immediately invalidates the
+      previous password.
+    sources:
+      - openapi/yoast-myyoast-provisioning-openapi.yml
+    rotation:
+      supported: true
+      operation: provisioningAccountControllerRegenerateToken
+      note: rotation invalidates the old password immediately; the response is shown once
+  - name: myyoast-oidc
+    type: openIdConnect
+    api: MyYoast (site + user authentication for Yoast SEO)
+    issuer: https://my.yoast.com
+    openIdConnectUrl: https://my.yoast.com/.well-known/openid-configuration
+    description: >-
+      MyYoast operates a full OpenID Connect provider. Yoast SEO enrols the customer's
+      WordPress site as an OAuth client using RFC 7591 Dynamic Client Registration and
+      then authenticates either the site (client_credentials) or a specific user
+      (authorization code + PKCE), driven from WP-CLI via `wp yoast auth`.
+    endpoints:
+      authorization: https://my.yoast.com/api/oauth/auth
+      token: https://my.yoast.com/api/oauth/token
+      userinfo: https://my.yoast.com/api/oauth/me
+      jwks: https://my.yoast.com/api/oauth/jwks
+      registration: https://my.yoast.com/api/oauth/reg
+      introspection: https://my.yoast.com/api/oauth/token/introspection
+      revocation: https://my.yoast.com/api/oauth/token/revocation
+      end_session: https://my.yoast.com/api/oauth/session/end
+    grant_types:
+      - authorization_code
+      - refresh_token
+      - client_credentials
+    response_types:
+      - code
+    pkce:
+      required_methods:
+        - S256
+    token_endpoint_auth_methods:
+      - none
+      - private_key_jwt
+    token_endpoint_auth_signing_algs:
+      - ES256
+      - EdDSA
+      - RS256
+    id_token_signing_algs:
+      - EdDSA
+    sender_constrained_tokens:
+      dpop: true
+      dpop_signing_algs:
+        - ES256
+        - EdDSA
+    dynamic_client_registration:
+      supported: true
+      spec: RFC 7591
+      endpoint: https://my.yoast.com/api/oauth/reg
+    key_rotation:
+      supported: true
+      note: '`wp yoast auth rotate-keys` rotates the registration or DPoP proof key pairs'
+    sources:
+      - well-known/yoast-openid-configuration.json
+  - name: wordpress-host
+    type: none
+    api: Yoast REST API, Schema Aggregator API, Yoast SEO Abilities API
+    description: >-
+      No Yoast-issued credential exists for these. They are WordPress REST routes served
+      by the customer's own install. The documented read paths (yoast/v1/get_head,
+      yoast_head_json on wp/v2/posts and wp/v2/pages, the schema-aggregator routes) are
+      reachable unauthenticated for public content; the WordPress Abilities API applies
+      its own per-ability permission checks, whose required capability Yoast does not
+      publish. Where authentication is needed it is WordPress's — cookie + nonce for
+      first-party requests, Application Passwords or a JWT/OAuth plugin for machine
+      clients.
+    sources:
+      - https://developer.yoast.com/customization/apis/rest-api/
+      - https://developer.yoast.com/features/yoast-seo-abilities/overview/
+gaps:
+  - >-
+    Yoast does not publish which WordPress capability each Abilities API ability
+    requires, so an integrator cannot tell in advance which role can read SEO scores.
+  - >-
+    The MyYoast Provisioning API remains HTTP Basic while the same host runs a modern
+    OIDC provider with DPoP; there is no documented path for a provisioner to move onto
+    OAuth.

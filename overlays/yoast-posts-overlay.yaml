@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Yoast Posts API
+  version: 1.0.0
+extends: openapi/yoast-posts-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: API Evangelist enrichment pipeline; annotations only, the underlying spec is not mutated
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: yoast
+    x-apievangelist-artifacts:
+      authentication: authentication/yoast-authentication.yml
+      conventions: conventions/yoast-conventions.yml
+      errors: errors/yoast-problem-types.yml
+      lifecycle: lifecycle/yoast-lifecycle.yml
+      rate-limits: rate-limits/yoast-rate-limits.yml
+      data-model: data-model/yoast-data-model.yml
+    x-apievangelist-delivery: self-hosted-plugin
+- target: $.servers[0]
+  update:
+    x-apievangelist-note: 'Templated host: Yoast ships plugin code, so the server is the customer''s own
+      WordPress install. Auth, TLS and throttling belong to that install, not to Yoast.'
+- target: $.paths['/wp/v2/posts'].get
+  update:
+    x-apievangelist-action-class: read
+    x-apievangelist-consequence: read-only
+- target: $.paths['/wp/v2/posts/{id}'].get
+  update:
+    x-apievangelist-action-class: read
+    x-apievangelist-consequence: read-only

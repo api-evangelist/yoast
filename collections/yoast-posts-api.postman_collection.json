@@ -1,0 +1,311 @@
+{
+  "item": [
+    {
+      "id": "bcb0138c-8cae-49d2-b2d3-76e6e93d0d68",
+      "name": "Posts",
+      "description": {
+        "content": "WordPress post SEO metadata via WP REST API",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4853d19d-ccdd-4aef-bef1-dca1f8dea539",
+          "name": "List Posts With SEO Data",
+          "request": {
+            "name": "List Posts With SEO Data",
+            "description": {
+              "content": "Returns WordPress posts with Yoast SEO metadata appended. Each post in the response includes yoast_head (HTML meta tags and Schema.org output) and yoast_head_json (structured key/value SEO data).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Filter by post slug"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of posts per page (max 100)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your WordPress site domain",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8ad80bb-b105-4aa0-bc41-db91c1c44249",
+              "name": "List of posts with SEO metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your WordPress site domain",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 7095,\n    \"date\": \"1998-07-01T14:52:47.070Z\",\n    \"modified\": \"1982-03-06T11:54:03.032Z\",\n    \"slug\": \"string\",\n    \"status\": \"string\",\n    \"title\": {\n      \"rendered\": \"string\"\n    },\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"excerpt\": {\n      \"rendered\": \"string\"\n    },\n    \"link\": \"https://cDtHF.mscpUJTXP9d6kJRv2I+Mk1qV4rQkBzzwt35oB\",\n    \"yoast_head\": \"string\",\n    \"yoast_head_json\": {\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"canonical\": \"http://UPTDBldIFsoktlDDexjyFLq.qmgtJnYLN3zSqrTVmjuk\",\n      \"robots\": {\n        \"index\": \"index\",\n        \"follow\": \"follow\",\n        \"max-snippet\": \"string\",\n        \"max-image-preview\": \"string\",\n        \"max-video-preview\": \"string\"\n      },\n      \"og_locale\": \"string\",\n      \"og_type\": \"string\",\n      \"og_title\": \"string\",\n      \"og_description\": \"string\",\n      \"og_url\": \"https://GumgPCChKpZummcQoldynkbreOJLOq.ejqkz5B7GMl8ei.\",\n      \"og_site_name\": \"string\",\n      \"og_image\": [\n        {\n          \"url\": \"http://pdvaAeJNkAHVC.tdymlVTCksKgSGD0b\",\n          \"width\": 9630,\n          \"height\": 1466,\n          \"type\": \"string\"\n        },\n        {\n          \"url\": \"https://EGtiZIgIrZkisSbkX.spiF6IhwF6\",\n          \"width\": 1431,\n          \"height\": 5634,\n          \"type\": \"string\"\n        }\n      ],\n      \"twitter_card\": \"string\",\n      \"twitter_title\": \"string\",\n      \"twitter_description\": \"string\",\n      \"twitter_image\": \"https://ZNGFMveDMxpOHNSmdPqGieyr.oetme9BxjYEFo4dGeecCiPnKZcWfgE3N7qm6euICfjWHETk0FOrQXHKc\",\n      \"article_published_time\": \"2007-09-25T11:14:03.391Z\",\n      \"article_modified_time\": \"1973-11-30T22:54:09.253Z\",\n      \"author\": \"string\",\n      \"schema\": {}\n    }\n  },\n  {\n    \"id\": 2183,\n    \"date\": \"1955-10-03T04:18:55.941Z\",\n    \"modified\": \"1951-08-18T06:24:47.544Z\",\n    \"slug\": \"string\",\n    \"status\": \"string\",\n    \"title\": {\n      \"rendered\": \"string\"\n    },\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"excerpt\": {\n      \"rendered\": \"string\"\n    },\n    \"link\": \"https://BKCwePGlSPgICKOA.mvhsxD1D3lA0Y0h7gHzl.+\",\n    \"yoast_head\": \"string\",\n    \"yoast_head_json\": {\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"canonical\": \"https://spKmtoaEepVmyTDQRjQGeAzyUZOBl.gbbk7Ap3ODpYVzn,6SEQ8izZiUksJHSRHykr5sj7acIdMSf5D\",\n      \"robots\": {\n        \"index\": \"index\",\n        \"follow\": \"nofollow\",\n        \"max-snippet\": \"string\",\n        \"max-image-preview\": \"string\",\n        \"max-video-preview\": \"string\"\n      },\n      \"og_locale\": \"string\",\n      \"og_type\": \"string\",\n      \"og_title\": \"string\",\n      \"og_description\": \"string\",\n      \"og_url\": \"https://YqudYrMAuxrCqaPV.mjA\",\n      \"og_site_name\": \"string\",\n      \"og_image\": [\n        {\n          \"url\": \"http://XuBZIIIxng.ngfruYYwYPkzE1iuipTNpDbXmgQ6-2LDlISUBd3ApEHiiQC5MeCdBZ\",\n          \"width\": 413,\n          \"height\": 3454,\n          \"type\": \"string\"\n        },\n        {\n          \"url\": \"http://jVOBZywq.ieAERKJ.UCoYD1sLsmhFJnG5JHr0I6DIWkKmsmqXfbhDN8KdPsA1G.\",\n          \"width\": 6767,\n          \"height\": 4823,\n          \"type\": \"string\"\n        }\n      ],\n      \"twitter_card\": \"string\",\n      \"twitter_title\": \"string\",\n      \"twitter_description\": \"string\",\n      \"twitter_image\": \"https://kpTosjdRnxWJysN.acsu5z4iGrJPCGF6ejNabNl-dFehIP6RUEEzvbquCr6jTiNj7mS\",\n      \"article_published_time\": \"1948-03-28T15:49:53.450Z\",\n      \"article_modified_time\": \"1983-05-28T17:53:22.216Z\",\n      \"author\": \"string\",\n      \"schema\": {}\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07ce3d87-4065-462f-871e-809d9d81a326",
+          "name": "Get Post With SEO Data",
+          "request": {
+            "name": "Get Post With SEO Data",
+            "description": {
+              "content": "Returns a single WordPress post with Yoast SEO metadata including yoast_head (HTML output) and yoast_head_json (structured SEO data object).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "posts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) WordPress post ID"
+                },
+                {
+                  "description": "Your WordPress site domain",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b890f005-1083-4be9-af14-75d02fc7d88c",
+              "name": "Post with SEO metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) WordPress post ID"
+                    },
+                    {
+                      "description": "Your WordPress site domain",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1331,\n  \"date\": \"1966-12-02T03:11:43.581Z\",\n  \"modified\": \"1983-04-29T12:11:50.931Z\",\n  \"slug\": \"string\",\n  \"status\": \"string\",\n  \"title\": {\n    \"rendered\": \"string\"\n  },\n  \"content\": {\n    \"rendered\": \"string\"\n  },\n  \"excerpt\": {\n    \"rendered\": \"string\"\n  },\n  \"link\": \"https://BEhRYCFxU.lbnysCt6syir7dcCVS,2hmEkK5xbkn.UzbxmG.H7AGNP-ZktZtyXSA-\",\n  \"yoast_head\": \"string\",\n  \"yoast_head_json\": {\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"canonical\": \"https://PezRY.ftmagxi9nKNFan3tRTYWt5Lnc8E-s5\",\n    \"robots\": {\n      \"index\": \"index\",\n      \"follow\": \"follow\",\n      \"max-snippet\": \"string\",\n      \"max-image-preview\": \"string\",\n      \"max-video-preview\": \"string\"\n    },\n    \"og_locale\": \"string\",\n    \"og_type\": \"string\",\n    \"og_title\": \"string\",\n    \"og_description\": \"string\",\n    \"og_url\": \"https://tqyNHepCUawAeysUiIwuleNXwuGRiA.hceuIVJ91+C+uKmEYbrcSlu\",\n    \"og_site_name\": \"string\",\n    \"og_image\": [\n      {\n        \"url\": \"https://qrwshHyLKbgBGbyQg.zimtv7Nt1kDevYRxBFvL2BQFts.T2BPMYGCfiN2XqjhxIHL\",\n        \"width\": 3560,\n        \"height\": 8580,\n        \"type\": \"string\"\n      },\n      {\n        \"url\": \"http://saGSwfFQlVwnxvDIosOJe.wcX97YEII7WD5ZhPQzKFm+xgsl,2b9\",\n        \"width\": 9224,\n        \"height\": 7130,\n        \"type\": \"string\"\n      }\n    ],\n    \"twitter_card\": \"string\",\n    \"twitter_title\": \"string\",\n    \"twitter_description\": \"string\",\n    \"twitter_image\": \"https://RgKfzLnqwSDHlHfH.gwFinN3v,A3nLv.rNetYLJKRurUrKTIkPEII0fMR4yFvNRc1zNgm64i12t\",\n    \"article_published_time\": \"1985-10-06T14:05:14.160Z\",\n    \"article_modified_time\": \"2013-07-15T04:51:41.078Z\",\n    \"author\": \"string\",\n    \"schema\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aec6509-ebf4-4b28-8710-046b2630e04c",
+              "name": "Post not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) WordPress post ID"
+                    },
+                    {
+                      "description": "Your WordPress site domain",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your WordPress site domain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.com",
+      "key": "site"
+    },
+    {
+      "type": "string",
+      "value": "https://{{site}}/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "33305989-d8f0-467c-a78a-490007adcf28",
+    "name": "Yoast REST Pages Posts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Yoast REST API returns all SEO metadata (meta tags, Schema.org JSON-LD, canonical URLs, Open Graph, Twitter Card data, and robots directives) for any URL or post on a WordPress site. The API is read-only and designed for headless WordPress implementations. It extends the WordPress WP-JSON REST API and provides a dedicated SEO head endpoint.\n\nContact Support:\n Name: Yoast Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developer.yoast.com/features/wp-cli/reindex-indexables/,
+  https://developer.yoast.com/features/wp-cli/auth/,
+  https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+note: >-
+  Yoast ships no standalone binary. Its CLI is a set of WP-CLI subcommands under the
+  `wp yoast` namespace, installed with the plugin and run against the customer's own
+  WordPress install. The `wp yoast auth` family is the notable one: it is a full OAuth
+  client lifecycle at the command line — RFC 7591 dynamic client registration,
+  client_credentials for the site, authorization code + PKCE for a user, revocation, and
+  key rotation for both registration and DPoP proof keys.
+cli:
+  name: wp yoast
+  type: wp-cli-namespace
+  standalone_binary: false
+  install:
+    - method: plugin
+      note: >-
+        Provided by the Yoast SEO plugin. Requires WP-CLI on the host; no separate
+        download or package install.
+      command: wp plugin install wordpress-seo --activate
+  auth_required: varies by subcommand
+commands:
+  - group: indexing
+    command: wp yoast index
+    description: >-
+      Runs the indexation process that fills the Yoast database tables with metadata for
+      the indexable objects on a site.
+    flags:
+      - name: '--network'
+        description: Performs the indexation on all sites within the network.
+      - name: '--reindex'
+        description: Removes all existing indexables and then reindexes them.
+    docs: https://developer.yoast.com/features/wp-cli/reindex-indexables/
+  - group: auth
+    command: wp yoast auth status
+    description: >-
+      Shows the current MyYoast OAuth client status: issuer configuration, registration
+      state, and token status.
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: auth
+    command: wp yoast auth register
+    description: >-
+      Enrols the site as an OAuth client with the MyYoast issuer using Dynamic Client
+      Registration (RFC 7591).
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: auth
+    command: wp yoast auth verify
+    description: Confirms that the current client registration is still valid with the authorization server.
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: auth
+    command: wp yoast auth deregister
+    description: Removes the client registration from the authorization server and clears local data.
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: auth
+    command: wp yoast auth authorize
+    description: >-
+      Authenticates the site or a specific user with MyYoast. For a site it performs a
+      client_credentials grant; for a user it runs the authorization code flow with PKCE
+      in two phases.
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: auth
+    command: wp yoast auth revoke
+    description: Revokes tokens for the current user, the site, or both.
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: auth
+    command: wp yoast auth rotate-keys
+    description: Rotates cryptographic key pairs — either the registration keys or the DPoP proof keys.
+    docs: https://developer.yoast.com/features/wp-cli/auth/
+  - group: schema
+    command: wp yoast aggregate_site_schema <post_type>
+    description: Builds the aggregated Schema.org output for a post type.
+    flags:
+      - name: '--page=<page>'
+        description: Aggregate a specific page of the post type.
+    docs: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+  - group: schema
+    command: wp yoast clear_schema_aggregator_cache [<post_type>]
+    description: >-
+      Clears the Schema Aggregator cache, optionally for a single post type.
+    docs: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+global_flags:
+  - name: '--user=<id|login|email>'
+    description: Target a specific WordPress user; supported by the auth subcommands where applicable.
+  - name: '--format=table|json'
+    description: Output format; supported by the auth subcommands where applicable.
+key_flows:
+  - name: Connect a site to MyYoast
+    steps:
+      - wp yoast auth register
+      - wp yoast auth authorize
+      - wp yoast auth status
+  - name: Rebuild the indexables that every Yoast API reads from
+    steps:
+      - wp yoast index --reindex
+    note: >-
+      The Abilities API requires indexables to be enabled and fully built, so this is a
+      prerequisite for the agent-facing surface.
+  - name: Refresh a site's aggregated schema
+    steps:
+      - wp yoast clear_schema_aggregator_cache post
+      - wp yoast aggregate_site_schema post
+counts:
+  commands: 11
+  groups: 3

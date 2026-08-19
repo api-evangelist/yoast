@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Yoast REST Pages Posts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Posts With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/posts",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by post slug"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of posts per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns WordPress posts with Yoast SEO metadata appended. Each post in the response includes yoast_head (HTML meta tags and Schema.org output) and yoast_head_json (structured key/value SEO data)."
+        },
+        {
+          "info": {
+            "name": "Get Post With SEO Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}/wp-json/wp/v2/posts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "WordPress post ID"
+              }
+            ]
+          },
+          "docs": "Returns a single WordPress post with Yoast SEO metadata including yoast_head (HTML output) and yoast_head_json (structured SEO data object)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

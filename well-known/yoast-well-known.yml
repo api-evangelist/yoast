@@ -1,0 +1,83 @@
+generated: '2026-08-13'
+method: searched
+source: live /.well-known/ probes of every Yoast host in apis.yml and openapi servers[]
+note: >-
+  Two real documents are served. yoast.com (and every host that inherits its edge)
+  serves an RFC 9116 security.txt. my.yoast.com — the MyYoast account/provisioning host
+  and the OAuth issuer that Yoast SEO's `wp yoast auth` commands talk to — serves a full
+  OpenID Connect discovery document, including a Dynamic Client Registration endpoint
+  and DPoP signing algorithms. developer.yoast.com is a Docusaurus SPA that answers every
+  unknown path with an HTML shell under a 404 status; nothing there is a document.
+  The per-site WordPress hosts (https://{site}/wp-json) are customer-owned, so there is
+  no Yoast-controlled /.well-known/ surface to probe for them.
+hosts:
+  - host: https://yoast.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain; charset=utf-8
+        file: yoast-security.txt
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://my.yoast.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json; charset=utf-8
+        file: yoast-openid-configuration.json
+        note: >-
+          OIDC discovery for issuer https://my.yoast.com. Advertises authorization_code,
+          refresh_token and client_credentials grants, PKCE S256, RFC 7591 dynamic client
+          registration at /api/oauth/reg, token introspection and revocation endpoints,
+          and DPoP proof signing algorithms (ES256, EdDSA).
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain; charset=utf-8
+        file: yoast-security.txt
+        note: same document as yoast.com; served from the shared edge
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://developer.yoast.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain; charset=utf-8
+        file: yoast-security.txt
+        note: same document as yoast.com; served from the shared edge
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+        note: HTML SPA shell returned under a 404 status — not a document
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+x-evidence:
+  fetched: '2026-08-13'
+  hits: 2
+  misses: 20

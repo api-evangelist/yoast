@@ -1,0 +1,182 @@
+openapi: 3.0.3
+info:
+  title: Yoast SEO Abilities API
+  description: >-
+    Yoast SEO registers its content-analysis results as WordPress Abilities (the
+    Abilities API introduced in WordPress 6.9), which makes them discoverable and
+    executable over the WordPress REST API by AI agents and third-party systems.
+    Yoast currently registers three read-only abilities that return the SEO,
+    readability and inclusive-language analysis scores of the most recently modified
+    posts. Requires WordPress 6.9+ with Yoast indexables enabled and fully built.
+  version: '1.0'
+  contact:
+    name: Yoast Developer Portal
+    url: https://developer.yoast.com/features/yoast-seo-abilities/overview/
+  license:
+    name: GPL-3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+  x-api-evangelist-provenance:
+    method: derived
+    source: https://developer.yoast.com/features/yoast-seo-abilities/analysis-scores/
+    note: >-
+      Paths, ability identifiers (yoast-seo/get-seo-scores,
+      yoast-seo/get-readability-scores, yoast-seo/get-inclusive-language-scores), the
+      number_of_posts input (integer, 1-100, default 10) and the title/score/label/
+      focus_keyphrase output fields are all quoted from Yoast's own developer portal.
+      Nothing was invented; where Yoast does not publish a detail (e.g. the required
+      WordPress capability) it is recorded as unknown rather than guessed.
+    fetched: '2026-08-13'
+servers:
+  - url: https://{site}/wp-json
+    description: >-
+      The customer's own WordPress installation. Yoast ships plugin code, not a hosted
+      gateway, so the host is the WordPress site running Yoast SEO.
+    variables:
+      site:
+        default: example.com
+        description: Your WordPress site domain
+tags:
+  - name: Abilities
+    description: Discovery and execution of Yoast SEO analysis-score abilities
+paths:
+  /wp-abilities/v1/abilities:
+    get:
+      operationId: listAbilities
+      summary: List registered abilities
+      description: >-
+        The WordPress Abilities API central discovery endpoint. Any client can list
+        everything registered on the site. Pass category=yoast-seo to list only the
+        abilities Yoast SEO registers.
+      tags:
+        - Abilities
+      parameters:
+        - name: category
+          in: query
+          required: false
+          description: Filter abilities by category; use "yoast-seo" for Yoast's abilities.
+          schema:
+            type: string
+            example: yoast-seo
+      responses:
+        '200':
+          description: The abilities registered on this site
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ability'
+  /wp-abilities/v1/abilities/yoast-seo/get-seo-scores/run:
+    get:
+      operationId: runGetSeoScores
+      summary: Run the SEO analysis score ability
+      description: >-
+        Returns the SEO analysis score of the most recently modified posts. This is the
+        only one of the three abilities that also returns the focus keyphrase.
+      tags:
+        - Abilities
+      parameters:
+        - $ref: '#/components/parameters/NumberOfPosts'
+      responses:
+        '200':
+          description: SEO analysis scores for the most recently modified posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SeoScore'
+  /wp-abilities/v1/abilities/yoast-seo/get-readability-scores/run:
+    get:
+      operationId: runGetReadabilityScores
+      summary: Run the readability analysis score ability
+      description: >-
+        Returns the readability analysis score of the most recently modified posts.
+      tags:
+        - Abilities
+      parameters:
+        - $ref: '#/components/parameters/NumberOfPosts'
+      responses:
+        '200':
+          description: Readability analysis scores for the most recently modified posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnalysisScore'
+  /wp-abilities/v1/abilities/yoast-seo/get-inclusive-language-scores/run:
+    get:
+      operationId: runGetInclusiveLanguageScores
+      summary: Run the inclusive language analysis score ability
+      description: >-
+        Returns the inclusive-language analysis score of the most recently modified
+        posts.
+      tags:
+        - Abilities
+      parameters:
+        - $ref: '#/components/parameters/NumberOfPosts'
+      responses:
+        '200':
+          description: Inclusive-language scores for the most recently modified posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnalysisScore'
+components:
+  parameters:
+    NumberOfPosts:
+      name: input[number_of_posts]
+      in: query
+      required: false
+      description: How many of the most recently modified posts to score.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+        example: 4
+  schemas:
+    Ability:
+      type: object
+      description: >-
+        A registered WordPress ability as returned by the discovery endpoint. Yoast's
+        developer portal documents the three Yoast ability names but not the full
+        discovery-record shape, so only the name is asserted here.
+      properties:
+        name:
+          type: string
+          enum:
+            - yoast-seo/get-seo-scores
+            - yoast-seo/get-readability-scores
+            - yoast-seo/get-inclusive-language-scores
+      additionalProperties: true
+    AnalysisScore:
+      type: object
+      description: One post's analysis score
+      properties:
+        title:
+          type: string
+          description: The post title
+        score:
+          type: string
+          description: The analysis score bucket
+          enum:
+            - na
+            - bad
+            - ok
+            - good
+        label:
+          type: string
+          description: Human-readable score label
+    SeoScore:
+      allOf:
+        - $ref: '#/components/schemas/AnalysisScore'
+        - type: object
+          properties:
+            focus_keyphrase:
+              type: string
+              nullable: true
+              description: The focus keyphrase set on the post; returned only by the SEO ability

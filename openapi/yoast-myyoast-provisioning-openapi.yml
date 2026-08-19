@@ -1,0 +1,409 @@
+openapi: 3.0.3
+info:
+  title: MyYoast Provisioning API
+  description: >-
+    The MyYoast Provisioning API (also called the Subscription API) lets an approved
+    Yoast provisioning partner create, read, renew, cancel, refund and site-link Yoast
+    product subscriptions on behalf of their customers, retrieve the current plugin
+    version and download URLs for a product code, schedule a GDPR delete for a customer,
+    and rotate their own provisioner Basic Auth password. It is a partner API: credentials
+    are issued by Yoast to provisioners only.
+  version: 1.0.0
+  contact:
+    name: Yoast Developer Portal
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  x-api-evangelist-provenance:
+    method: derived
+    source: https://github.com/Yoast/subscription-api-php-client
+    note: >-
+      Derived verbatim from Yoast's own first-party swagger-codegen client
+      (github.com/Yoast/subscription-api-php-client, "The Yoast provisioning API",
+      API version 1.0.0). Paths, HTTP methods, operation ids, parameter names and
+      locations, model property names and types, and the Basic Auth scheme were all
+      read out of that generated client's src/Api/*.php and src/Model/*.php plus its
+      docs/. Descriptions are quoted from the same generated docs. Yoast's own
+      interactive Swagger document at https://my.yoast.com/provisioning-api/ requires
+      provisioner credentials, so nothing here was invented to fill a gap.
+    fetched: '2026-08-13'
+servers:
+  - url: https://my.yoast.com
+    description: MyYoast production (host taken verbatim from Configuration.php $host)
+tags:
+  - name: Subscription Provisioning
+    description: Create, read and manage provisioned Yoast subscriptions
+  - name: Provisioning Downloads
+    description: Current product versions and download URLs for a product code
+  - name: Provisioning Users
+    description: Customer-level operations, including scheduled GDPR delete
+  - name: Provisioning Account
+    description: Provisioner account self-service
+paths:
+  /api/provisioning/subscriptions/create:
+    post:
+      operationId: subscriptionProvisioningControllerCreate
+      summary: Create a subscription
+      description: Creates a subscription for a customer.
+      tags:
+        - Subscription Provisioning
+      security:
+        - basic: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProvisionedSubscriptionDto'
+      responses:
+        '200':
+          description: The provisioned subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/provisioning/subscriptions/{id}:
+    get:
+      operationId: subscriptionProvisioningControllerGetOne
+      summary: Get a subscription
+      description: Get a single subscription that was provisioned for a third party.
+      tags:
+        - Subscription Provisioning
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionId'
+      responses:
+        '200':
+          description: The provisioned subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/provisioning/subscriptions/{id}/renew:
+    post:
+      operationId: subscriptionProvisioningControllerRenewSubscription
+      summary: Renew a subscription
+      description: Renew the subscription for a new period.
+      tags:
+        - Subscription Provisioning
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionId'
+      responses:
+        '200':
+          description: The renewed subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/provisioning/subscriptions/{id}/cancel:
+    post:
+      operationId: subscriptionProvisioningControllerCancelSubscription
+      summary: Cancel a single subscription
+      description: >-
+        Cancel the subscription when the period ends, or immediately if that is
+        requested, or the subscription is not valid.
+      tags:
+        - Subscription Provisioning
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelProvisionedSubscriptionDto'
+      responses:
+        '200':
+          description: The cancelled subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/provisioning/subscriptions/{id}/refund:
+    post:
+      operationId: subscriptionProvisioningControllerRefundSubscription
+      summary: Refund a single subscription
+      description: Refund the subscription.
+      tags:
+        - Subscription Provisioning
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionId'
+      responses:
+        '200':
+          description: The refunded subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/provisioning/subscriptions/{id}/set-site:
+    post:
+      operationId: subscriptionProvisioningControllerSetSiteForSubscription
+      summary: Link a subscription to a site
+      description: >-
+        Links the subscription to a customer's website. Setting a site on the
+        subscription will remove the site if already set.
+      tags:
+        - Subscription Provisioning
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/SubscriptionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetProvisionedSiteDto'
+      responses:
+        '200':
+          description: The subscription with its site set
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/provisioning/downloads/currentVersion:
+    get:
+      operationId: provisioningDownloadsControllerCurrentVersion
+      summary: Retrieve the current version for the productCode for the provisioner
+      description: >-
+        This route returns the latest version of the product that is offered to the
+        customer when using the passed productCode.
+      tags:
+        - Provisioning Downloads
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/ProductCode'
+      responses:
+        '200':
+          description: The latest version string for the product
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v2/provisioning/downloads/currentVersion:
+    get:
+      operationId: provisioningDownloadsControllerCurrentVersionV2
+      summary: Get current version of downloads for a product
+      description: >-
+        This route returns the version numbers and the download URLs of the latest
+        versions of the available downloads for a product.
+      tags:
+        - Provisioning Downloads
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/ProductCode'
+      responses:
+        '200':
+          description: Latest versions and download URLs for the product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVersionsDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/provisioning/downloads/currentZip:
+    get:
+      operationId: provisioningDownloadsControllerCurrentZip
+      summary: Redirect to the current zip for the productCode
+      description: >-
+        If a new version is available, you can use this route to redirect to the zip
+        of that new version of the product.
+      tags:
+        - Provisioning Downloads
+      security:
+        - basic: []
+      parameters:
+        - $ref: '#/components/parameters/ProductCode'
+      responses:
+        '302':
+          description: Redirect to the product zip download URL
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/provisioning/user/schedule-delete:
+    post:
+      operationId: provisioningUsersControllerScheduleDelete
+      summary: Schedule a delete for a subscription
+      description: Schedules a customer for gdpr delete.
+      tags:
+        - Provisioning Users
+      security:
+        - basic: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleDeleteUserDto'
+      responses:
+        '200':
+          description: The affected subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionProvisioningResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/provisioning/account/regenerate-token:
+    post:
+      operationId: provisioningAccountControllerRegenerateToken
+      summary: Generate a new auth token
+      description: >-
+        This route generates a new password for the Basic Auth that is used by
+        provisioner accounts to authenticate with. After this route is called, the old
+        password will NO LONGER be valid. Please store the response of this request
+        somewhere safe!
+      tags:
+        - Provisioning Account
+      security:
+        - basic: []
+      responses:
+        '200':
+          description: The regenerated provisioner credential
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegenerateTokenResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+      description: >-
+        HTTP Basic authentication with provisioner credentials issued by Yoast.
+        The password can be rotated with POST /api/provisioning/account/regenerate-token.
+  parameters:
+    SubscriptionId:
+      name: id
+      in: path
+      required: true
+      description: The provisioned subscription identifier
+      schema:
+        type: string
+    ProductCode:
+      name: productCode
+      in: query
+      required: true
+      description: The code used to create the product.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
+    NotFound:
+      description: No subscription found for the supplied id
+  schemas:
+    CreateProvisionedSubscriptionDto:
+      type: object
+      description: Payload used to create a subscription for a customer
+      properties:
+        customerEmail:
+          type: string
+          format: email
+        productCode:
+          type: string
+        site:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    CancelProvisionedSubscriptionDto:
+      type: object
+      description: Cancellation options
+      properties:
+        immediately:
+          type: boolean
+          description: Cancel now instead of at the end of the current period
+    SetProvisionedSiteDto:
+      type: object
+      description: The site to link the subscription to
+      properties:
+        site:
+          type: string
+    ScheduleDeleteUserDto:
+      type: object
+      description: >-
+        Payload for scheduling a customer GDPR delete. The generated client references
+        this model but does not ship its definition, so its properties are not
+        published; treat the shape as unspecified rather than assuming fields.
+      additionalProperties: true
+    SubscriptionProvisioningResponseDto:
+      type: object
+      description: A provisioned Yoast subscription
+      properties:
+        iD:
+          type: string
+        subscriptionNumber:
+          type: string
+        status:
+          type: string
+        startDate:
+          type: integer
+          description: Unix timestamp
+        endDate:
+          type: integer
+          description: Unix timestamp
+        pluginDownloadUrls:
+          type: array
+          items:
+            type: string
+        siteUrl:
+          type: string
+    ProductVersionsDto:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVersionDto'
+    ProductVersionDto:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        version:
+          type: string
+        downloadUrl:
+          type: string
+    RegenerateTokenResponseDto:
+      type: object
+      description: >-
+        The newly generated provisioner Basic Auth password. The generated client
+        references this model but does not ship its definition, so field names are not
+        published.
+      additionalProperties: true

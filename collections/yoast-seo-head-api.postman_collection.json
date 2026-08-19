@@ -1,0 +1,190 @@
+{
+  "item": [
+    {
+      "id": "5ccc0e5d-8758-4ea5-8bab-81f95d553d65",
+      "name": "SEO Head",
+      "description": {
+        "content": "Retrieve SEO metadata for any URL",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e4f049ca-9a11-4eb4-ae66-5a86012ad786",
+          "name": "Get SEO Head for URL",
+          "request": {
+            "name": "Get SEO Head for URL",
+            "description": {
+              "content": "Returns all SEO metadata for a given URL including meta tags, Schema.org JSON-LD structured data, canonical URL, robots directives, Open Graph tags, and Twitter Card data. This is the primary endpoint for headless WordPress implementations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "yoast",
+                "v1",
+                "get_head"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<uri>",
+                  "description": "(Required) The full URL of the page to retrieve SEO metadata for"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your WordPress site domain",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5884585c-63c7-44e0-b8c7-428b7f4b938d",
+              "name": "SEO metadata for the requested URL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "yoast",
+                    "v1",
+                    "get_head"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "https://example.com/blog/my-post/"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your WordPress site domain",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"html\": \"string\",\n  \"json\": {\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"canonical\": \"https://sU.uuxRtMvwo.HrbiO0iLNaviUQ.nlYuT-zYBYKrGA-9-a1kX,xRAPk0YP9MmmZPr\",\n    \"robots\": {\n      \"index\": \"index\",\n      \"follow\": \"follow\",\n      \"max-snippet\": \"string\",\n      \"max-image-preview\": \"string\",\n      \"max-video-preview\": \"string\"\n    },\n    \"og_locale\": \"string\",\n    \"og_type\": \"string\",\n    \"og_title\": \"string\",\n    \"og_description\": \"string\",\n    \"og_url\": \"http://jFBsHmIYpnpafBoWIlI.keAD0gciJUUwgRGcGzaW9OjiMvYbzgvLKAY.tX4pB\",\n    \"og_site_name\": \"string\",\n    \"og_image\": [\n      {\n        \"url\": \"http://oosrtASeJiKP.elsSKqkeZnv-hNb2JDdRqhE2,rXhPGe.7Wy8TdcV\",\n        \"width\": 5984,\n        \"height\": 3378,\n        \"type\": \"string\"\n      },\n      {\n        \"url\": \"http://IVvGs.gmMNx0Ko48S0CVFG+DIowC8q5VeP,CxurgzYi,QSXv.rUVGV4wyPcuHjnE8\",\n        \"width\": 1476,\n        \"height\": 9668,\n        \"type\": \"string\"\n      }\n    ],\n    \"twitter_card\": \"string\",\n    \"twitter_title\": \"string\",\n    \"twitter_description\": \"string\",\n    \"twitter_image\": \"https://zkPBLOwWedRbGEokiSifFBzPjXbco.amckzx.Ji+VdHYrjGmsiVbWvh-tnm82TseCFpiz8.iVsFMGWB\",\n    \"article_published_time\": \"1955-12-24T11:02:25.953Z\",\n    \"article_modified_time\": \"1957-01-03T15:21:11.623Z\",\n    \"author\": \"string\",\n    \"schema\": {}\n  },\n  \"status\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd1776fe-6b07-4de7-a5b0-66aab1b9ef6a",
+              "name": "URL not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "yoast",
+                    "v1",
+                    "get_head"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "https://example.com/blog/my-post/"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your WordPress site domain",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"data\": {\n    \"status\": 5062\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your WordPress site domain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.com",
+      "key": "site"
+    },
+    {
+      "type": "string",
+      "value": "https://{{site}}/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2248c17b-e384-4312-b367-b3a4e9c59384",
+    "name": "Yoast REST Pages SEO Head API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Yoast REST API returns all SEO metadata (meta tags, Schema.org JSON-LD, canonical URLs, Open Graph, Twitter Card data, and robots directives) for any URL or post on a WordPress site. The API is read-only and designed for headless WordPress implementations. It extends the WordPress WP-JSON REST API and provides a dedicated SEO head endpoint.\n\nContact Support:\n Name: Yoast Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

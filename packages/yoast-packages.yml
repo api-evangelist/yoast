@@ -1,0 +1,232 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, repo.packagist.org and github.com/Yoast, queried
+  unauthenticated on 2026-08-13
+note: >-
+  Yoast ships two very different families of package. The FIRST family is the
+  JavaScript analysis + UI stack that the Yoast SEO plugin itself is built from and
+  which third parties reuse to embed Yoast's content analysis (yoastseo, @yoast/*).
+  The SECOND family is PHP: the plugin distributions themselves plus Yoast's widely
+  reused developer tooling (yoast/phpunit-polyfills alone has 46M+ Composer installs).
+  The only packages that are true API CLIENTS — the MyYoast provisioning clients — are
+  published as git repositories rather than to a registry, so they carry version: null
+  with a note; a consumer pinning them is pinning a git ref, not a release.
+packages:
+  # --- MyYoast Provisioning API clients (the only first-party API SDKs) ---
+  - language: php
+    registry: git
+    name: yoast/subscription-api-php-client
+    url: https://github.com/Yoast/subscription-api-php-client
+    install: 'composer require yoast/subscription-api-php-client:*@dev  # via VCS repository entry'
+    official: true
+    version: null
+    published: null
+    api: MyYoast Provisioning API
+    note: >-
+      Checked and absent from Packagist (repo.packagist.org returns 404). Yoast's own
+      README instructs installation via a composer "repositories" VCS entry pointing at
+      the GitHub repo with constraint "*@dev", so the distribution is unpinned and floats
+      to the default branch. Swagger Codegen output; declares API version 1.0.0.
+  - language: javascript
+    registry: git
+    name: subscription-api-javascript-client
+    url: https://github.com/Yoast/subscription-api-javascript-client
+    install: 'npm install Yoast/subscription-api-javascript-client --save'
+    official: true
+    version: null
+    published: null
+    api: MyYoast Provisioning API
+    note: >-
+      Checked and absent from npm under both the plausible names. The README explicitly
+      tells consumers to publish it themselves or install from git, so there is no
+      published release to date. Swagger Codegen output; declares package version 1.0.0.
+
+  # --- JavaScript content-analysis + UI stack ---
+  - language: javascript
+    registry: npm
+    name: yoastseo
+    url: https://www.npmjs.com/package/yoastseo
+    install: npm install yoastseo
+    official: true
+    version: 3.6.0
+    published: '2026-02-13'
+    description: Yoast client-side content analysis
+  - language: javascript
+    registry: npm
+    name: '@yoast/ui-library'
+    url: https://www.npmjs.com/package/@yoast/ui-library
+    install: npm install @yoast/ui-library
+    official: true
+    version: 4.5.0
+    published: '2026-03-16'
+    description: Yoast UI library
+  - language: javascript
+    registry: npm
+    name: '@yoast/search-metadata-previews'
+    url: https://www.npmjs.com/package/@yoast/search-metadata-previews
+    install: npm install @yoast/search-metadata-previews
+    official: true
+    version: 3.0.0
+    published: '2026-03-16'
+    description: Google/social snippet preview components
+  - language: javascript
+    registry: npm
+    name: '@yoast/replacement-variable-editor'
+    url: https://www.npmjs.com/package/@yoast/replacement-variable-editor
+    install: npm install @yoast/replacement-variable-editor
+    official: true
+    version: 2.0.0
+    published: '2026-03-16'
+    description: Editor for Yoast replacement variables
+  - language: javascript
+    registry: npm
+    name: '@yoast/related-keyphrase-suggestions'
+    url: https://www.npmjs.com/package/@yoast/related-keyphrase-suggestions
+    install: npm install @yoast/related-keyphrase-suggestions
+    official: true
+    version: 0.4.0
+    published: '2026-03-16'
+    description: Yoast related keyphrase suggestions package
+  - language: javascript
+    registry: npm
+    name: '@yoast/components'
+    url: https://www.npmjs.com/package/@yoast/components
+    install: npm install @yoast/components
+    official: true
+    version: 3.0.0-alpha.3
+    published: '2025-11-12'
+    description: Yoast Components
+    note: latest published dist-tag is a prerelease
+  - language: javascript
+    registry: npm
+    name: '@yoast/analysis-report'
+    url: https://www.npmjs.com/package/@yoast/analysis-report
+    install: npm install @yoast/analysis-report
+    official: true
+    version: 2.0.0-alpha.2
+    published: '2025-11-12'
+    description: Rendering components for Yoast analysis results
+    note: latest published dist-tag is a prerelease
+  - language: javascript
+    registry: npm
+    name: '@yoast/helpers'
+    url: https://www.npmjs.com/package/@yoast/helpers
+    install: npm install @yoast/helpers
+    official: true
+    version: 0.17.0-alpha.2
+    published: '2025-11-12'
+    description: All Yoast helper functions
+    note: latest published dist-tag is a prerelease
+  - language: javascript
+    registry: npm
+    name: '@yoast/style-guide'
+    url: https://www.npmjs.com/package/@yoast/style-guide
+    install: npm install @yoast/style-guide
+    official: true
+    version: 0.14.0-alpha.1
+    published: '2025-11-12'
+    description: Yoast style guide
+    note: latest published dist-tag is a prerelease
+  - language: javascript
+    registry: npm
+    name: '@yoast/feature-flag'
+    url: https://www.npmjs.com/package/@yoast/feature-flag
+    install: npm install @yoast/feature-flag
+    official: true
+    version: 0.6.0-alpha.2
+    published: '2025-11-12'
+    note: latest published dist-tag is a prerelease
+  - language: javascript
+    registry: npm
+    name: '@yoast/browserslist-config'
+    url: https://www.npmjs.com/package/@yoast/browserslist-config
+    install: npm install @yoast/browserslist-config
+    official: true
+    version: 1.2.5
+    published: '2025-11-11'
+    description: The browserslist configuration for Yoast projects
+
+  # --- PHP: plugin distributions and developer tooling ---
+  - language: php
+    registry: packagist
+    name: yoast/wordpress-seo
+    url: https://packagist.org/packages/yoast/wordpress-seo
+    install: composer require yoast/wordpress-seo
+    official: true
+    version: 28.3-RC2
+    published: '2026-08-04'
+    description: The Yoast SEO plugin distributed as a Composer package
+  - language: php
+    registry: packagist
+    name: yoast/duplicate-post
+    url: https://packagist.org/packages/yoast/duplicate-post
+    install: composer require yoast/duplicate-post
+    official: true
+    version: '4.6'
+    published: '2026-03-09'
+    description: Yoast Duplicate Post plugin
+  - language: php
+    registry: packagist
+    name: yoast/phpunit-polyfills
+    url: https://packagist.org/packages/yoast/phpunit-polyfills
+    install: composer require --dev yoast/phpunit-polyfills
+    official: true
+    version: 4.0.0
+    published: '2025-02-09'
+    description: PHPUnit cross-version polyfills
+  - language: php
+    registry: packagist
+    name: yoast/wp-test-utils
+    url: https://packagist.org/packages/yoast/wp-test-utils
+    install: composer require --dev yoast/wp-test-utils
+    official: true
+    version: 1.2.1
+    published: '2026-02-05'
+    description: PHPUnit cross-version compatibility layer for testing WordPress plugins
+  - language: php
+    registry: packagist
+    name: yoast/yoastcs
+    url: https://packagist.org/packages/yoast/yoastcs
+    install: composer require --dev yoast/yoastcs
+    official: true
+    version: 3.4.3
+    published: '2026-08-07'
+    description: PHP_CodeSniffer rules for Yoast projects
+  - language: php
+    registry: packagist
+    name: yoast/test-helper
+    url: https://packagist.org/packages/yoast/test-helper
+    install: composer require --dev yoast/test-helper
+    official: true
+    version: '1.19'
+    published: '2026-05-27'
+    description: Yoast plugin testing helper
+  - language: php
+    registry: packagist
+    name: yoast/whip
+    url: https://packagist.org/packages/yoast/whip
+    install: composer require yoast/whip
+    official: true
+    version: 2.0.0
+    published: '2023-12-27'
+    description: Nudges users to upgrade outdated PHP/WordPress
+    note: no release in over two years
+  - language: php
+    registry: packagist
+    name: yoast/i18n-module
+    url: https://packagist.org/packages/yoast/i18n-module
+    install: composer require yoast/i18n-module
+    official: true
+    version: 3.1.1
+    published: '2019-05-07'
+    description: Handle i18n for WordPress plugins
+    note: last release 2019; effectively dormant
+counts:
+  total: 21
+  official: 21
+  languages:
+    javascript: 12
+    php: 9
+  api_clients: 2
+  unpinned_or_unpublished: 2

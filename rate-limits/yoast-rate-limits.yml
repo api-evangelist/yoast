@@ -4,37 +4,81 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Yoast
 providerId: yoast
 created: '2026-05-04'
-modified: '2026-05-05'
-reconciled: false
+# Provenance: originally written by the API Evangelist bulk sweep dated 2026-05-04
+# (roadmap#35). Re-checked 2026-08-13 by searching the developer portal for any published
+# limit and by observing live throttling responses on yoast.com and my.yoast.com.
+method: searched
+modified: '2026-08-13'
+reconciled: true
+reconciled_date: '2026-08-13'
+limit_count: 0
 tags:
   - SEO
   - WordPress
   - Plugin
   - Rate Limiting
 description: |
-  Yoast does not run a hosted developer API gateway. The plugin exposes functionality via
-  WordPress REST endpoints on the host site, so request throttling is governed by the
-  customer's own WordPress / hosting stack (e.g. Apache / nginx / WP Engine) rather than
-  by Yoast. There is therefore no Yoast-published per-second or per-minute number to
-  reconcile.
+  Yoast publishes NO rate limits for any of its APIs, and emits no rate-limit response
+  headers anywhere. This is an honest zero, not a gap in the search: developer.yoast.com
+  documents no limits on the REST API, the Schema Aggregator or the Abilities API, and
+  the MyYoast Provisioning API's own generated client declares none.
+
+  The structural reason is that most of the surface is not Yoast's to throttle. The Yoast
+  REST, Schema Aggregator and Abilities endpoints are WordPress REST routes running inside
+  the customer's own install, so throttling is whatever that host enforces (nginx, Apache,
+  a WAF, WP Engine, Cloudflare). Yoast ships plugin code, not a gateway.
+
+  Throttling on Yoast's OWN hosts is real and was observed live during this pass, but it is
+  edge protection rather than a published API budget, and it carries no machine-readable
+  signal a client could plan against.
 sources:
+  - https://developer.yoast.com/customization/apis/rest-api/
+  - https://developer.yoast.com/features/yoast-seo-abilities/overview/
   - https://yoast.com/wordpress/plugins/seo/pricing/
+responseHeaders:
+  published: []
+  note: >-
+    No RateLimit-*, no X-RateLimit-*, no Retry-After was observed on any response,
+    including on the 429s. A client has no budget, no remaining count, and no reset time
+    to read — the only available strategy is exponential backoff with jitter.
 responseCodes:
   throttled: 429
-limits:
-  - name: Host-WordPress throttling (varies)
-    scope: account
-    metric: varies
-    limit: governed by the host WordPress / hosting provider
-    notes: Yoast does not publish a Yoast-specific rate-limit policy; calls to
-      /wp-json/yoast/v1/* hit the customer's own WordPress install.
+limits: []
+observed:
+  - host: yoast.com
+    behaviour: >-
+      Rapid sequential unauthenticated requests returned HTTP 429 from nginx with no
+      Retry-After header. Recovered after pacing.
+    status: 429
+    observed_on: '2026-08-13'
+  - host: my.yoast.com
+    behaviour: >-
+      Cloudflare rate limiting. Returns HTTP 429 with a plain-text body "error code: 1015"
+      and content-type text/plain — not JSON, so a client parsing the body as JSON will
+      throw on the throttle path rather than handle it.
+    status: 429
+    observed_on: '2026-08-13'
+    note: >-
+      A browser User-Agent and slower pacing cleared it, which indicates bot heuristics
+      rather than a per-credential quota.
 policies:
   - name: No Yoast gateway
-    description: Yoast is delivered as plugin code, not as a managed API; rate limits are
-      whatever the host WordPress / hosting platform enforces.
+    description: >-
+      Yoast is delivered as plugin code, not as a managed API; limits on the site-side
+      APIs are whatever the host WordPress or hosting platform enforces.
+  - name: Edge protection on Yoast-owned hosts
+    description: >-
+      yoast.com and my.yoast.com apply bot/rate protection at the edge with no documented
+      threshold and no rate-limit headers.
   - name: Backoff
-    description: When Yoast call-outs to external services (e.g. yoast.com licence
-      activation) return 429 / 5xx, clients should back off and retry with jitter.
+    description: >-
+      On 429 or 5xx, back off exponentially with jitter. Do not blind-retry write
+      operations on the MyYoast Provisioning API — it has no idempotency key, so a retried
+      create can bill a customer twice. See conventions/yoast-conventions.yml.
+gaps:
+  - No published rate limit exists for any Yoast API.
+  - No rate-limit response headers are emitted on any surface.
+  - The my.yoast.com throttle response is plain text, not the JSON envelope the API otherwise uses.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

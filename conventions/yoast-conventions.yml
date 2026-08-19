@@ -1,0 +1,136 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developer.yoast.com/customization/apis/rest-api/,
+  https://developer.yoast.com/features/schema/schema-aggregator/api-reference/,
+  https://developer.yoast.com/features/yoast-seo-abilities/analysis-scores/,
+  https://developer.yoast.com/features/http-headers/functional-specification/,
+  https://my.yoast.com/.well-known/openid-configuration
+note: >-
+  Yoast's cross-cutting semantics are inherited more than authored: the site-side APIs
+  are WordPress REST routes and follow WordPress's conventions, and Yoast documents only
+  where it diverges. The one surface Yoast fully owns, the MyYoast Provisioning API, is a
+  NestJS-shaped RPC-ish API whose conventions are visible in its generated client rather
+  than in prose. There is NO idempotency mechanism anywhere in the Yoast surface — no
+  Idempotency-Key header, no client-supplied request id — which matters because the
+  provisioning API's create/renew/cancel/refund operations are exactly the kind of
+  money-moving calls that need one.
+auth:
+  style: mixed
+  detail: authentication/yoast-authentication.yml
+  summary: >-
+    Site APIs use WordPress's own auth (public for read paths, cookie/nonce or
+    Application Passwords otherwise). MyYoast Provisioning uses HTTP Basic with
+    partner-issued credentials. MyYoast site/user auth uses OIDC with PKCE and DPoP.
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No idempotency key is documented or implemented on any Yoast API. The read-only site
+    APIs are naturally idempotent (all GET), but the provisioning API's POST
+    create/renew/cancel/refund/set-site operations offer no replay protection: a retried
+    create after a timeout can produce a second subscription, and nothing in the contract
+    lets a partner deduplicate it. This is the single clearest gap in Yoast's runtime
+    semantics.
+  risk_operations:
+    - subscriptionProvisioningControllerCreate
+    - subscriptionProvisioningControllerRenewSubscription
+    - subscriptionProvisioningControllerCancelSubscription
+    - subscriptionProvisioningControllerRefundSubscription
+    - provisioningAccountControllerRegenerateToken
+pagination:
+  styles:
+    - api: WordPress post/page SEO fields
+      style: page-number
+      params:
+        page: 1-based page number, default 1
+        per_page: items per page, default 10, maximum 100
+      response_fields: []
+      note: >-
+        WordPress core returns X-WP-Total and X-WP-TotalPages headers on these
+        collections; Yoast's own docs do not restate them.
+    - api: Schema Aggregator
+      style: path-segment
+      params:
+        page: appended as a path segment, /get-schema/{post_type}/{page}
+      page_size_control: >-
+        server-side only, via the wpseo_schema_aggregator_per_page WordPress filter — a
+        consumer cannot set it per request
+      discovery: >-
+        GET /wp-json/yoast/v1/schema-aggregator/get-xml returns an XML schemamap listing
+        every available page, so a crawler enumerates rather than guesses
+    - api: Yoast SEO Abilities
+      style: count-limited
+      params:
+        'input[number_of_posts]': integer 1-100, default 10
+      note: not true pagination — there is no offset or cursor, only a capped result count
+    - api: MyYoast Provisioning
+      style: none
+      note: no list operations exist; subscriptions are fetched one at a time by id
+field_expansion:
+  supported: false
+  note: >-
+    No expand/fields/sparse-fieldset parameter on any Yoast surface. The SEO payload is
+    all-or-nothing: yoast_head returns the rendered HTML head and yoast_head_json the
+    structured equivalent, and a consumer that wants one field still receives the whole
+    object.
+metadata:
+  supported: false
+  note: no customer-defined metadata bag on any Yoast resource
+request_tracing:
+  request_id_header: null
+  supported: false
+  note: >-
+    No request id is returned by any Yoast API. The only Yoast-authored response headers
+    are x-robots-tag ("noindex, follow" on XML sitemaps and XMLRPC) and x-redirected-by
+    ("Yoast SEO Premium", set when the Premium redirect manager performs a redirect) —
+    both SEO signals, not observability signals.
+versioning:
+  detail: lifecycle/yoast-lifecycle.yml
+  style: uri-path
+  note: 'yoast/v1, wp/v2, wp-abilities/v1; /api/v2/ on one provisioning route'
+error_envelope:
+  format: wordpress-rest
+  media_type: application/json
+  shape: '{code, message, data:{status}}'
+  rfc9457: false
+  detail: errors/yoast-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: 429
+  retry_after: false
+  note: >-
+    No RateLimit-* or X-RateLimit-* headers are emitted by any Yoast API. Edge throttling
+    is real and observable (nginx 429 on yoast.com, Cloudflare error 1015 on
+    my.yoast.com) but carries no machine-readable budget, so a client can only back off
+    blindly.
+  detail: rate-limits/yoast-rate-limits.yml
+content_negotiation:
+  json: true
+  jsonl:
+    supported: true
+    note: the Schema Aggregator returns JSON-L (newline-delimited JSON) rather than a JSON array
+  xml:
+    supported: true
+    note: the schemamap and Yoast's XML sitemaps
+caching:
+  note: >-
+    The Schema Aggregator maintains a server-side cache, clearable on the site with
+    `wp yoast clear_schema_aggregator_cache`. No cache-control contract is published for
+    API consumers.
+extensibility:
+  mechanism: WordPress filters and actions
+  note: >-
+    Yoast's real extension surface is PHP hooks, not HTTP. Dozens of documented filters
+    (wpseo_*) change what the APIs return, which means two Yoast sites can return
+    materially different payloads from the same route. An integrator cannot detect this
+    from the contract.
+cross_links:
+  authentication: authentication/yoast-authentication.yml
+  scopes: scopes/yoast-scopes.yml
+  errors: errors/yoast-problem-types.yml
+  lifecycle: lifecycle/yoast-lifecycle.yml
+  rate_limits: rate-limits/yoast-rate-limits.yml
+  data_model: data-model/yoast-data-model.yml

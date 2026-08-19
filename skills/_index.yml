@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/ in this repo, grounded in verified operationIds
+provider: Yoast
+note: >-
+  Four packaged Agent Skills, one per marquee flow across Yoast's four callable API
+  surfaces. Every `operations:` entry is a real operationId present in the corresponding
+  spec in openapi/ — none is invented. Also included verbatim is Yoast's own
+  provider-published AGENTS.md, which is a CONTRIBUTOR-agent document (how an AI coding
+  agent should behave inside the wordpress-seo repository), not an API-consumer skill;
+  it is recorded separately below so the two are never conflated.
+skills:
+  - name: yoast-read-seo-metadata-for-a-url
+    file: yoast-read-seo-metadata-for-a-url.md
+    api: Yoast SEO Head API
+    spec: openapi/yoast-seo-head-api-openapi.yml
+    operations:
+      - getSeoHead
+    summary: >-
+      Get every piece of SEO metadata Yoast produces for one URL — meta tags, canonical,
+      robots, Open Graph, Twitter Card and the Schema.org graph — in a single call.
+  - name: yoast-audit-content-analysis-scores
+    file: yoast-audit-content-analysis-scores.md
+    api: Yoast SEO Abilities API
+    spec: openapi/yoast-abilities-api-openapi.yml
+    operations:
+      - listAbilities
+      - runGetSeoScores
+      - runGetReadabilityScores
+      - runGetInclusiveLanguageScores
+    summary: >-
+      Read SEO, readability and inclusive-language scores for a site's recently modified
+      posts through the WordPress Abilities API — the surface Yoast built for agents.
+  - name: yoast-harvest-a-sites-schema-graph
+    file: yoast-harvest-a-sites-schema-graph.md
+    api: Yoast Schema Aggregator API
+    spec: openapi/yoast-schema-aggregator-openapi.yml
+    operations:
+      - getSchemaMap
+      - getAggregatedSchema
+      - getAggregatedSchemaPage
+    summary: >-
+      Discover from the XML schemamap, then pull a whole site's Schema.org entity graph
+      as JSON-L.
+  - name: yoast-provision-a-partner-subscription
+    file: yoast-provision-a-partner-subscription.md
+    api: MyYoast Provisioning API
+    spec: openapi/yoast-myyoast-provisioning-openapi.yml
+    operations:
+      - subscriptionProvisioningControllerCreate
+      - subscriptionProvisioningControllerSetSiteForSubscription
+      - subscriptionProvisioningControllerGetOne
+      - subscriptionProvisioningControllerRenewSubscription
+      - subscriptionProvisioningControllerCancelSubscription
+      - subscriptionProvisioningControllerRefundSubscription
+      - provisioningDownloadsControllerCurrentVersionV2
+      - provisioningUsersControllerScheduleDelete
+      - provisioningAccountControllerRegenerateToken
+    summary: >-
+      Full partner subscription lifecycle on my.yoast.com, with explicit handling for the
+      absence of idempotency keys on money-moving operations.
+provider_published:
+  - name: Yoast SEO AGENTS.md
+    file: yoast-wordpress-seo-AGENTS.md
+    method: searched
+    source: https://github.com/Yoast/wordpress-seo/blob/trunk/AGENTS.md
+    fetched: '2026-08-13'
+    http_status: 200
+    kind: contributor-agent instructions
+    summary: >-
+      Yoast's own AGENTS.md, saved verbatim. It follows the agents.md convention and
+      tells an AI coding agent how to work inside the wordpress-seo repository —
+      delegate long builds, verify identifiers before citing them, prefer editing over
+      creating, never hand-edit generated or vendored directories, run
+      `composer check-branch-cs` after committing and before pushing, and follow
+      DEPRECATING.md when deprecating PHP. A companion CLAUDE.md in the same repo is a
+      three-line pointer that pulls AGENTS.md and .github/CONTRIBUTING.md into context.
+    note: >-
+      This is NOT an API-consumer skill and must not be counted as one. It is evidence
+      that Yoast thinks about agents in its engineering process, not that Yoast publishes
+      an agent interface to its APIs.
+counts:
+  skills: 4
+  provider_published: 1
+  operations_referenced: 17

@@ -1,0 +1,68 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for MyYoast Provisioning API
+  version: 1.0.0
+extends: openapi/yoast-myyoast-provisioning-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: API Evangelist enrichment pipeline; annotations only, the underlying spec is not mutated
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: yoast
+    x-apievangelist-artifacts:
+      authentication: authentication/yoast-authentication.yml
+      conventions: conventions/yoast-conventions.yml
+      errors: errors/yoast-problem-types.yml
+      lifecycle: lifecycle/yoast-lifecycle.yml
+      rate-limits: rate-limits/yoast-rate-limits.yml
+      data-model: data-model/yoast-data-model.yml
+    x-apievangelist-delivery: hosted
+- target: $.servers[0]
+  update:
+    x-apievangelist-note: 'Yoast-operated host. Partner-gated: Basic Auth credentials are issued by Yoast
+      to approved provisioners only.'
+- target: $.paths['/api/provisioning/subscriptions/create'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing
+- target: $.paths['/api/provisioning/subscriptions/{id}'].get
+  update:
+    x-apievangelist-action-class: read
+    x-apievangelist-consequence: read-only
+- target: $.paths['/api/provisioning/subscriptions/{id}/renew'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing
+- target: $.paths['/api/provisioning/subscriptions/{id}/cancel'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing
+- target: $.paths['/api/provisioning/subscriptions/{id}/refund'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing
+- target: $.paths['/api/provisioning/subscriptions/{id}/set-site'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing
+- target: $.paths['/api/provisioning/downloads/currentVersion'].get
+  update:
+    x-apievangelist-action-class: read
+    x-apievangelist-consequence: read-only
+- target: $.paths['/api/v2/provisioning/downloads/currentVersion'].get
+  update:
+    x-apievangelist-action-class: read
+    x-apievangelist-consequence: read-only
+- target: $.paths['/api/provisioning/downloads/currentZip'].get
+  update:
+    x-apievangelist-action-class: read
+    x-apievangelist-consequence: read-only
+- target: $.paths['/api/provisioning/user/schedule-delete'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing
+- target: $.paths['/api/provisioning/account/regenerate-token'].post
+  update:
+    x-apievangelist-action-class: write
+    x-apievangelist-consequence: state-changing

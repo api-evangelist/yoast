@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+source: registry.npmjs.org (@yoast scope), queried unauthenticated 2026-08-13
+note: >-
+  Yoast publishes its editor UI as reusable React packages on npm under the @yoast scope.
+  These are the components that render the Yoast metabox, the Google/social snippet
+  previews, the replacement-variable editor and the analysis result lists — the surfaces
+  a WordPress user actually touches — and they are consumed by page builders and headless
+  editors that want the Yoast experience outside the Yoast metabox. They are NOT SDKs:
+  they call no Yoast-hosted API. Note the currency split: the presentation packages
+  (ui-library, snippet previews, replacement-variable editor) shipped stable releases in
+  March 2026, while the older components/analysis-report/helpers/style-guide line has
+  been sitting on 2025 alpha prereleases as its latest published tag.
+distribution:
+  registry: npm
+  scope: '@yoast'
+  loader: none — consumed as React packages via a bundler; no hosted script tag or CDN embed
+  framework: React
+families:
+  - family: Design system
+    description: The shared visual language every other Yoast component is built on.
+    components:
+      - name: '@yoast/ui-library'
+        version: 4.5.0
+        published: '2026-03-16'
+        description: Yoast UI library — the current design-system package
+        url: https://www.npmjs.com/package/@yoast/ui-library
+      - name: '@yoast/style-guide'
+        version: 0.14.0-alpha.1
+        published: '2025-11-12'
+        description: Yoast style guide (colors, typography, spacing tokens)
+        url: https://www.npmjs.com/package/@yoast/style-guide
+        note: latest published tag is a prerelease
+      - name: '@yoast/components'
+        version: 3.0.0-alpha.3
+        published: '2025-11-12'
+        description: Yoast Components — the older general component set
+        url: https://www.npmjs.com/package/@yoast/components
+        note: latest published tag is a prerelease
+  - family: Search appearance preview
+    description: The snippet editors that show how a page will look in search and on social.
+    components:
+      - name: '@yoast/search-metadata-previews'
+        version: 3.0.0
+        published: '2026-03-16'
+        description: Google and social snippet preview components
+        url: https://www.npmjs.com/package/@yoast/search-metadata-previews
+      - name: '@yoast/replacement-variable-editor'
+        version: 2.0.0
+        published: '2026-03-16'
+        description: Editor for Yoast replacement variables (%%title%%, %%sitename%% and friends)
+        url: https://www.npmjs.com/package/@yoast/replacement-variable-editor
+  - family: Analysis
+    description: Rendering of the SEO, readability and inclusive-language analysis results.
+    components:
+      - name: '@yoast/analysis-report'
+        version: 2.0.0-alpha.2
+        published: '2025-11-12'
+        description: Renders Yoast analysis results as an assessment list
+        url: https://www.npmjs.com/package/@yoast/analysis-report
+        note: latest published tag is a prerelease
+      - name: '@yoast/related-keyphrase-suggestions'
+        version: 0.4.0
+        published: '2026-03-16'
+        description: Related keyphrase suggestion UI
+        url: https://www.npmjs.com/package/@yoast/related-keyphrase-suggestions
+  - family: Supporting libraries
+    description: Not UI, but shipped alongside and required by the component packages.
+    components:
+      - name: yoastseo
+        version: 3.6.0
+        published: '2026-02-13'
+        description: >-
+          Yoast client-side content analysis — the engine the analysis components render
+          the output of. Runs entirely in the browser or in Node; no Yoast API call.
+        url: https://www.npmjs.com/package/yoastseo
+      - name: '@yoast/helpers'
+        version: 0.17.0-alpha.2
+        published: '2025-11-12'
+        url: https://www.npmjs.com/package/@yoast/helpers
+      - name: '@yoast/feature-flag'
+        version: 0.6.0-alpha.2
+        published: '2025-11-12'
+        url: https://www.npmjs.com/package/@yoast/feature-flag
+counts:
+  families: 4
+  components: 11
+  stable: 5
+  prerelease_latest: 5

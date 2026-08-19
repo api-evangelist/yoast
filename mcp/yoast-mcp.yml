@@ -1,0 +1,109 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/ in this repo
+docs_checked:
+  - https://developer.yoast.com/
+  - https://developer.yoast.com/customization/apis/overview/
+  - https://developer.yoast.com/features/yoast-seo-abilities/overview/
+  - https://yoast.com/llms.txt
+note: >-
+  Yoast publishes NO first-party MCP server. Searched the developer portal, the Yoast
+  GitHub org, yoast.com/llms.txt and the public MCP directories; every Yoast SEO "MCP
+  server" that turns up is third-party (Easy MCP AI, miniOrange Secure MCP Server,
+  Novamira, Pipedream) and runs on the customer's own WordPress install, not on Yoast
+  infrastructure. Yoast's own agent-facing bet is the WordPress Abilities API instead:
+  since Yoast SEO 27.5 it registers three read-only abilities that any MCP bridge on the
+  site can expose. That is a real agent surface, but it is not an MCP server Yoast
+  operates, so this artifact stays a derived candidate. The tools below are a candidate
+  projection of the OpenAPI operations in this repo; nobody ships them.
+deployment:
+  mode: none
+  auth: unknown
+  verified: searched
+server:
+  name: yoast
+  transport: null
+  url: null
+tools:
+  # --- Yoast SEO REST API, on the customer's WordPress host ---
+  - name: get_seo_head
+    description: Get all SEO metadata (meta tags, Schema.org JSON-LD, canonical, robots, OG, Twitter) for a URL
+    source_operation: openapi/yoast-seo-head-api-openapi.yml#getSeoHead
+  - name: list_posts_with_seo
+    description: List WordPress posts with Yoast SEO metadata appended
+    source_operation: openapi/yoast-posts-api-openapi.yml#listPostsWithSeo
+  - name: get_post_with_seo
+    description: Get a single WordPress post with Yoast SEO metadata
+    source_operation: openapi/yoast-posts-api-openapi.yml#getPostWithSeo
+  - name: list_pages_with_seo
+    description: List WordPress pages with Yoast SEO metadata appended
+    source_operation: openapi/yoast-pages-api-openapi.yml#listPagesWithSeo
+  - name: get_page_with_seo
+    description: Get a single WordPress page with Yoast SEO metadata
+    source_operation: openapi/yoast-pages-api-openapi.yml#getPageWithSeo
+  # --- Yoast SEO Abilities API (WordPress 6.9 Abilities), on the customer's WordPress host ---
+  - name: list_abilities
+    description: List the abilities registered on the site, optionally filtered to category yoast-seo
+    source_operation: openapi/yoast-abilities-api-openapi.yml#listAbilities
+  - name: get_seo_scores
+    description: Get the SEO analysis score and focus keyphrase of the most recently modified posts
+    source_operation: openapi/yoast-abilities-api-openapi.yml#runGetSeoScores
+  - name: get_readability_scores
+    description: Get the readability analysis score of the most recently modified posts
+    source_operation: openapi/yoast-abilities-api-openapi.yml#runGetReadabilityScores
+  - name: get_inclusive_language_scores
+    description: Get the inclusive language analysis score of the most recently modified posts
+    source_operation: openapi/yoast-abilities-api-openapi.yml#runGetInclusiveLanguageScores
+  # --- Schema Aggregator, on the customer's WordPress host ---
+  - name: get_aggregated_schema
+    description: Get the aggregated Schema.org graph for a post type as JSON-L
+    source_operation: openapi/yoast-schema-aggregator-openapi.yml#getAggregatedSchema
+  - name: get_aggregated_schema_page
+    description: Get one page of the aggregated Schema.org graph for a post type
+    source_operation: openapi/yoast-schema-aggregator-openapi.yml#getAggregatedSchemaPage
+  - name: get_schema_map
+    description: Get the XML schemamap listing every aggregated-schema endpoint on the site
+    source_operation: openapi/yoast-schema-aggregator-openapi.yml#getSchemaMap
+  # --- MyYoast Provisioning API, on my.yoast.com (partner credentials required) ---
+  - name: create_subscription
+    description: Create a Yoast subscription for a customer
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerCreate
+  - name: get_subscription
+    description: Get a single provisioned subscription
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerGetOne
+  - name: renew_subscription
+    description: Renew a subscription for a new period
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerRenewSubscription
+  - name: cancel_subscription
+    description: Cancel a subscription at period end or immediately
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerCancelSubscription
+  - name: refund_subscription
+    description: Refund a subscription
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerRefundSubscription
+  - name: set_subscription_site
+    description: Link a subscription to a customer website
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerSetSiteForSubscription
+  - name: get_current_product_version
+    description: Get the latest version and download URLs offered for a product code
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#provisioningDownloadsControllerCurrentVersionV2
+  - name: schedule_user_delete
+    description: Schedule a customer for GDPR delete
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#provisioningUsersControllerScheduleDelete
+third_party_servers_note: >-
+  Recorded for accuracy only — these are NOT Yoast products and must never be counted
+  as a Yoast agent surface.
+third_party_servers:
+  - name: Easy MCP AI
+    url: https://easymcpai.com/plugins/yoast-seo
+    vendor: third-party WordPress plugin
+    surface: exposes 3 Yoast SEO tools (get/update post SEO) among 242 total
+  - name: miniOrange Secure MCP Server
+    url: https://wordpress.org/plugins/miniorange-secure-mcp-server/
+    vendor: third-party WordPress plugin
+  - name: Novamira
+    url: https://novamira.ai/mcp/yoast-seo/
+    vendor: third-party
+  - name: Pipedream
+    url: https://mcp.pipedream.com/app/yoast_seo
+    vendor: third-party

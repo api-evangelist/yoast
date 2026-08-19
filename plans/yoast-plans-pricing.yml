@@ -4,8 +4,14 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Yoast
 providerId: yoast
 created: '2026-05-04'
-modified: '2026-05-05'
-reconciled: false
+# Provenance: originally written by the API Evangelist bulk sweep dated 2026-05-04
+# (roadmap#35). Re-harvested 2026-08-13 from the live Yoast pricing page, which
+# confirmed the Premium headline price and the per-seat Google Docs add-on.
+method: searched
+modified: '2026-08-13'
+reconciled: true
+reconciled_date: '2026-08-13'
+plan_count: 2
 tags:
   - SEO
   - WordPress
@@ -19,10 +25,30 @@ description: |
   plugin licence; there is no separate Yoast API price card to reconcile.
 sources:
   - https://yoast.com/wordpress/plugins/seo/pricing/
+currencies:
+  - USD
+  - EUR
+  - GBP
+api_pricing:
+  metered: false
+  api_price_card_published: false
+  note: >-
+    No per-call, per-seat or per-quota API pricing exists. Licence pricing is the only
+    price Yoast publishes.
 notes: |
-  Reconciled the Premium licence tier from yoast.com (USD 118.80/year ex-VAT). Free and
-  add-on bundles are listed but only Premium has a confirmed headline price; everything
-  else is held as "see vendor pricing" rather than fabricated.
+  Re-checked against https://yoast.com/wordpress/plugins/seo/pricing/ on 2026-08-13
+  (HTTP 200). Confirmed: Yoast SEO Premium is USD 118.80 per year excluding VAT, one
+  subscription covers one site or domain, multiple subscriptions are bought at checkout
+  with a bulk discount, and extra Yoast SEO Google Docs seats are USD 5 excl. VAT per
+  month each. EUR and GBP are also offered. The page does not publish comparative
+  pricing for WooCommerce SEO, Local SEO, Video SEO, News SEO or the Shopify app, so
+  those remain unpriced here rather than guessed.
+
+  IMPORTANT for API consumers: none of these plans is an API price. Yoast sells a plugin
+  licence. The Yoast REST, Schema Aggregator and Abilities endpoints run inside the
+  customer's own WordPress install and cost nothing per call; the one Yoast-hosted API,
+  the MyYoast Provisioning API, is partner-gated with no published price card at all.
+  There is no metered Yoast API tier to compare against competitors.
 plans:
   - id: yoast-seo-free
     name: Yoast SEO (Free)
@@ -68,6 +94,10 @@ plans:
       - name: 24/7 support
       - name: Bundled Local SEO, Video SEO, News SEO plugins
       - name: One Google Docs add-on seat
+    addOns:
+      - name: Additional Yoast SEO Google Docs seat
+        price: '$5 / month (ex VAT) per seat'
+        source: https://yoast.com/wordpress/plugins/seo/pricing/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

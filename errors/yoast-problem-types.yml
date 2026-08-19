@@ -1,0 +1,83 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ in this repo, plus the documented WordPress REST error envelope
+format: wordpress-rest
+rfc9457: false
+note: >-
+  Yoast publishes no error-code reference for any of its APIs. The Yoast REST, Schema
+  Aggregator and Abilities endpoints are WordPress REST routes, so they return the
+  standard WordPress error envelope — {"code","message","data":{"status"}} — not
+  application/problem+json, and the codes are WordPress's rather than Yoast's. Yoast's
+  own docs note only that "Yoast SEO will also return full responses for non-200
+  scenarios (including legitimate 404 errors)". The MyYoast Provisioning API's generated
+  client throws a generic ApiException and declares no error models, so its failure
+  shapes are not published either. Everything below is derived from the specs in this
+  repo and the WordPress REST contract; no error code has been invented.
+envelope:
+  media_type: application/json
+  shape:
+    code: string — machine-readable WordPress error slug
+    message: string — human-readable message
+    data:
+      status: integer — the HTTP status code, repeated inside the body
+  source: openapi/_original/yoast-rest-openapi.yml#/components/schemas/ErrorResponse
+problems:
+  - status: 404
+    title: URL not found
+    description: >-
+      No page could be resolved for the requested url, so no SEO head can be returned.
+    envelope: wordpress-rest
+    source_operation: openapi/yoast-seo-head-api-openapi.yml#getSeoHead
+  - status: 404
+    title: Post not found
+    description: No WordPress post exists with the requested id.
+    envelope: wordpress-rest
+    source_operation: openapi/yoast-posts-api-openapi.yml#getPostWithSeo
+  - status: 404
+    title: Page not found
+    description: No WordPress page exists with the requested id.
+    envelope: wordpress-rest
+    source_operation: openapi/yoast-pages-api-openapi.yml#getPageWithSeo
+  - status: 404
+    title: No schema for post type
+    description: >-
+      The requested post type has no aggregated schema, or the requested page number is
+      beyond the available pages.
+    envelope: wordpress-rest
+    source_operation: openapi/yoast-schema-aggregator-openapi.yml#getAggregatedSchema
+  - status: 401
+    title: Unauthorized
+    description: >-
+      Missing or invalid provisioner Basic Auth credentials on the MyYoast Provisioning
+      API. Note that a rotated password invalidates the previous one immediately, so a
+      401 after a rotate is expected on any client still holding the old secret.
+    envelope: unpublished
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerCreate
+  - status: 404
+    title: Subscription not found
+    description: No provisioned subscription exists for the supplied id.
+    envelope: unpublished
+    source_operation: openapi/yoast-myyoast-provisioning-openapi.yml#subscriptionProvisioningControllerGetOne
+  - status: 429
+    title: Too Many Requests
+    description: >-
+      Observed, not documented. The Yoast edge (nginx on yoast.com, Cloudflare rate
+      limiting error 1015 on my.yoast.com) returns 429 to unauthenticated clients that
+      request too quickly. There is no Retry-After or RateLimit-* header on the
+      Cloudflare 1015 response body, which is plain text rather than JSON.
+    envelope: none
+    source_operation: probed
+    x-evidence:
+      fetched: '2026-08-13'
+      url: https://my.yoast.com/provisioning-api/
+      http_status: 429
+      body: 'error code: 1015'
+gaps:
+  - Yoast publishes no error-code reference or error catalog for any API.
+  - No API returns application/problem+json; there is no error `type` URI to dereference.
+  - >-
+    The MyYoast Provisioning API's own generated client declares no error response
+    models, so a partner integrating it cannot know the failure shapes in advance.
+counts:
+  problems: 7
+  distinct_statuses: 4
