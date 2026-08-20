@@ -189,6 +189,11 @@ apis:
   humanURL: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
   baseURL: https://my.yoast.com
   tags:
+  - Subscription
+  - Provisioning
+  - Partner API
+  - Licensing
+  tags_raw:
   - Subscriptions
   - Provisioning
   - Partner API
