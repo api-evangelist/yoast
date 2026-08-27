@@ -138,10 +138,11 @@ apis:
 - aid: yoast:yoast-abilities-api
   name: Yoast SEO Abilities API
   description: >-
-    Yoast SEO registers its content-analysis results as WordPress Abilities (the Abilities API introduced in
-    WordPress 6.9), making them discoverable and executable over the WordPress REST API by AI agents and third-party
-    systems. Three read-only abilities — yoast-seo/get-seo-scores, yoast-seo/get-readability-scores and
-    yoast-seo/get-inclusive-language-scores — return the analysis scores of the most recently modified posts.
+    Yoast SEO registers its content-analysis results as WordPress Abilities (the Abilities API introduced
+    in WordPress 6.9), making them discoverable and executable over the WordPress REST API by AI agents
+    and third-party systems. Three read-only abilities — yoast-seo/get-seo-scores, yoast-seo/get-readability-scores
+    and yoast-seo/get-inclusive-language-scores — return the analysis scores of the most recently modified
+    posts.
   humanURL: https://developer.yoast.com/features/yoast-seo-abilities/overview/
   baseURL: https://{your-site}/wp-json
   tags:
@@ -158,51 +159,90 @@ apis:
     url: https://developer.yoast.com/features/yoast-seo-abilities/overview/
   - type: APIReference
     url: https://developer.yoast.com/features/yoast-seo-abilities/analysis-scores/
-- aid: yoast:yoast-schema-aggregator-api
-  name: Yoast Schema Aggregator API
-  description: >-
-    The Yoast Schema Aggregator exposes a site's aggregated Schema.org structured data over the WordPress REST API as
-    paginated JSON-L, plus an XML schemamap listing every available schema endpoint on the site — the structured-data
-    equivalent of an XML sitemap, aimed at search engines and AI crawlers that want a site's entity graph in one place.
-  humanURL: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
-  baseURL: https://{your-site}/wp-json
+- aid: yoast:yoast-provisioning-account-api
+  name: Yoast Provisioning Account API
+  description: Provisioner account self-service
+  humanURL: https://developer.yoast.com/customization/apis/surfaces-api/
+  baseURL: https://{your-site}
   tags:
-  - Schema.org
-  - Structured Data
-  - JSON-LD
-  - WordPress
+  - Provisioning Account
   properties:
   - type: OpenAPI
-    url: openapi/yoast-schema-aggregator-openapi.yml
-  - type: Overlay
-    url: overlays/yoast-schema-aggregator-overlay.yaml
+    url: openapi/yoast-provisioning-account-api-openapi.yml
   - type: Documentation
     url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
-- aid: yoast:myyoast-provisioning-api
-  name: MyYoast Provisioning API
-  description: >-
-    The MyYoast Provisioning API (also called the Subscription API) is the one API Yoast hosts itself. It lets an
-    approved Yoast provisioning partner create, read, renew, cancel, refund and site-link Yoast product subscriptions
-    on behalf of their customers, retrieve the current plugin version and download URLs for a product code, schedule a
-    GDPR delete for a customer, and rotate their own provisioner Basic Auth password. Credentials are issued by Yoast
-    to provisioners only.
-  humanURL: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
-  baseURL: https://my.yoast.com
+  - type: Documentation
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  - type: OpenIDConnect
+    url: well-known/yoast-openid-configuration.json
+  - type: SourceCode
+    url: https://github.com/Yoast/subscription-api-php-client
+- aid: yoast:yoast-provisioning-downloads-api
+  name: Yoast Provisioning Downloads API
+  description: Current product versions and download URLs for a product code
+  humanURL: https://developer.yoast.com/customization/apis/surfaces-api/
+  baseURL: https://{your-site}
   tags:
-  - Subscription
-  - Provisioning
-  - Partner API
-  - Licensing
-  tags_raw:
-  - Subscriptions
-  - Provisioning
-  - Partner API
-  - Licensing
+  - Provisioning Downloads
   properties:
   - type: OpenAPI
-    url: openapi/yoast-myyoast-provisioning-openapi.yml
-  - type: Overlay
-    url: overlays/yoast-myyoast-provisioning-overlay.yaml
+    url: openapi/yoast-provisioning-downloads-api-openapi.yml
+  - type: Documentation
+    url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+  - type: Documentation
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  - type: OpenIDConnect
+    url: well-known/yoast-openid-configuration.json
+  - type: SourceCode
+    url: https://github.com/Yoast/subscription-api-php-client
+- aid: yoast:yoast-provisioning-users-api
+  name: Yoast Provisioning Users API
+  description: Customer-level operations, including scheduled GDPR delete
+  humanURL: https://developer.yoast.com/customization/apis/surfaces-api/
+  baseURL: https://{your-site}
+  tags:
+  - Provisioning Users
+  properties:
+  - type: OpenAPI
+    url: openapi/yoast-provisioning-users-api-openapi.yml
+  - type: Documentation
+    url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+  - type: Documentation
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  - type: OpenIDConnect
+    url: well-known/yoast-openid-configuration.json
+  - type: SourceCode
+    url: https://github.com/Yoast/subscription-api-php-client
+- aid: yoast:yoast-schema-aggregator-api
+  name: Yoast Schema Aggregator API
+  description: Aggregated Schema.org output for a WordPress site
+  humanURL: https://developer.yoast.com/customization/apis/surfaces-api/
+  baseURL: https://{your-site}
+  tags:
+  - Schema Aggregator
+  properties:
+  - type: OpenAPI
+    url: openapi/yoast-schema-aggregator-api-openapi.yml
+  - type: Documentation
+    url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+  - type: Documentation
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  - type: OpenIDConnect
+    url: well-known/yoast-openid-configuration.json
+  - type: SourceCode
+    url: https://github.com/Yoast/subscription-api-php-client
+- aid: yoast:yoast-subscription-provisioning-api
+  name: Yoast Subscription Provisioning API
+  description: Create, read and manage provisioned Yoast subscriptions
+  humanURL: https://developer.yoast.com/customization/apis/surfaces-api/
+  baseURL: https://{your-site}
+  tags:
+  - Subscription Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/yoast-subscription-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
   - type: Documentation
     url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
   - type: OpenIDConnect
@@ -210,6 +250,10 @@ apis:
   - type: SourceCode
     url: https://github.com/Yoast/subscription-api-php-client
 common:
+  - type: Overlay
+    url: overlays/yoast-schema-aggregator-overlay.yaml
+  - type: Overlay
+    url: overlays/yoast-myyoast-provisioning-overlay.yaml
   - type: AgenticAccess
     url: agentic-access/yoast-agentic-access.yml
   - type: VulnerabilityDisclosure
