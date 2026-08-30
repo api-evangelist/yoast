@@ -1,0 +1,112 @@
+openapi: 3.2.0
+info:
+  title: MyYoast Provisioning Provisioning Downloads API
+  description: 'The MyYoast Provisioning API (also called the Subscription API) lets an approved Yoast provisioning partner create, read, renew, cancel, refund and site-link Yoast product subscriptions on behalf of their customers, retrieve the current plugin version and download URLs for a product code, schedule a GDPR delete for a customer, and rotate their own provisioner Basic Auth password. It is a partner API: credentials are issued by Yoast to provisioners only.'
+  version: 1.0.0
+  contact:
+    name: Yoast Developer Portal
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  x-api-evangelist-provenance:
+    method: derived
+    source: https://github.com/Yoast/subscription-api-php-client
+    note: Derived verbatim from Yoast's own first-party swagger-codegen client (github.com/Yoast/subscription-api-php-client, "The Yoast provisioning API", API version 1.0.0). Paths, HTTP methods, operation ids, parameter names and locations, model property names and types, and the Basic Auth scheme were all read out of that generated client's src/Api/*.php and src/Model/*.php plus its docs/. Descriptions are quoted from the same generated docs. Yoast's own interactive Swagger document at https://my.yoast.com/provisioning-api/ requires provisioner credentials, so nothing here was invented to fill a gap.
+    fetched: '2026-08-13'
+servers:
+- url: https://my.yoast.com
+  description: MyYoast production (host taken verbatim from Configuration.php $host)
+tags:
+- name: Provisioning Downloads
+  description: Current product versions and download URLs for a product code
+paths:
+  /api/provisioning/downloads/currentVersion:
+    get:
+      operationId: provisioningDownloadsControllerCurrentVersion
+      summary: Retrieve the current version for the productCode for the provisioner
+      description: This route returns the latest version of the product that is offered to the customer when using the passed productCode.
+      tags:
+      - Provisioning Downloads
+      security:
+      - basic: []
+      parameters:
+      - $ref: '#/components/parameters/ProductCode'
+      responses:
+        '200':
+          description: The latest version string for the product
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v2/provisioning/downloads/currentVersion:
+    get:
+      operationId: provisioningDownloadsControllerCurrentVersionV2
+      summary: Get current version of downloads for a product
+      description: This route returns the version numbers and the download URLs of the latest versions of the available downloads for a product.
+      tags:
+      - Provisioning Downloads
+      security:
+      - basic: []
+      parameters:
+      - $ref: '#/components/parameters/ProductCode'
+      responses:
+        '200':
+          description: Latest versions and download URLs for the product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVersionsDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/provisioning/downloads/currentZip:
+    get:
+      operationId: provisioningDownloadsControllerCurrentZip
+      summary: Redirect to the current zip for the productCode
+      description: If a new version is available, you can use this route to redirect to the zip of that new version of the product.
+      tags:
+      - Provisioning Downloads
+      security:
+      - basic: []
+      parameters:
+      - $ref: '#/components/parameters/ProductCode'
+      responses:
+        '302':
+          description: Redirect to the product zip download URL
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    ProductVersionDto:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        version:
+          type: string
+        downloadUrl:
+          type: string
+    ProductVersionsDto:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVersionDto'
+  parameters:
+    ProductCode:
+      name: productCode
+      in: query
+      required: true
+      description: The code used to create the product.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication with provisioner credentials issued by Yoast. The password can be rotated with POST /api/provisioning/account/regenerate-token.

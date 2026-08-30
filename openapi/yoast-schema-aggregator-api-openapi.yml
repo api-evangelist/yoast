@@ -1,0 +1,96 @@
+openapi: 3.2.0
+info:
+  title: Yoast Schema Aggregator API
+  description: The Yoast Schema Aggregator exposes a site's aggregated Schema.org structured data over the WordPress REST API. It returns paginated JSON-L bundles of the schema for a given post type, plus an XML "schemamap" listing every available schema endpoint on the site — the structured-data equivalent of an XML sitemap, intended for search engines and AI crawlers that want a site's entity graph in one place.
+  version: '1.0'
+  contact:
+    name: Yoast Developer Portal
+    url: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+  license:
+    name: GPL-3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+  x-api-evangelist-provenance:
+    method: derived
+    source: https://developer.yoast.com/features/schema/schema-aggregator/api-reference/
+    note: Route shapes (/wp-json/yoast/v1/schema-aggregator/get-schema/{post_type}[/{page}] and /wp-json/yoast/v1/schema-aggregator/get-xml), the JSON-L response format and the pagination behaviour are quoted from Yoast's own API reference. Response schemas are described only to the level Yoast publishes them.
+    fetched: '2026-08-13'
+servers:
+- url: https://{site}/wp-json
+  description: The customer's own WordPress installation. Yoast ships plugin code, not a hosted gateway, so the host is the WordPress site running Yoast SEO.
+  variables:
+    site:
+      default: example.com
+      description: Your WordPress site domain
+tags:
+- name: Schema Aggregator
+  description: Aggregated Schema.org output for a WordPress site
+paths:
+  /yoast/v1/schema-aggregator/get-schema/{post_type}:
+    get:
+      operationId: getAggregatedSchema
+      summary: Get aggregated schema for a post type
+      description: Returns the aggregated Schema.org data for every item of the given post type, in JSON-L format. Results are paginated; page size is filterable on the site via the wpseo_schema_aggregator_per_page filter.
+      tags:
+      - Schema Aggregator
+      parameters:
+      - $ref: '#/components/parameters/PostType'
+      responses:
+        '200':
+          description: Aggregated Schema.org data in JSON-L
+          content:
+            application/jsonl:
+              schema:
+                type: string
+                description: Newline-delimited JSON, one Schema.org graph per line
+        '404':
+          description: No schema available for the requested post type
+  /yoast/v1/schema-aggregator/get-schema/{post_type}/{page}:
+    get:
+      operationId: getAggregatedSchemaPage
+      summary: Get one page of aggregated schema for a post type
+      description: Returns a single page of the aggregated Schema.org data for the given post type, in JSON-L format.
+      tags:
+      - Schema Aggregator
+      parameters:
+      - $ref: '#/components/parameters/PostType'
+      - name: page
+        in: path
+        required: true
+        description: 1-based page number
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: One page of aggregated Schema.org data in JSON-L
+          content:
+            application/jsonl:
+              schema:
+                type: string
+                description: Newline-delimited JSON, one Schema.org graph per line
+        '404':
+          description: No such page for the requested post type
+  /yoast/v1/schema-aggregator/get-xml:
+    get:
+      operationId: getSchemaMap
+      summary: Get the XML schemamap
+      description: Returns an XML schemamap listing all available schema endpoints on the site, so a crawler can discover every aggregated-schema page without guessing post types or page numbers.
+      tags:
+      - Schema Aggregator
+      responses:
+        '200':
+          description: XML schemamap of every available aggregated-schema endpoint
+          content:
+            application/xml:
+              schema:
+                type: string
+components:
+  parameters:
+    PostType:
+      name: post_type
+      in: path
+      required: true
+      description: The WordPress post type to aggregate schema for (e.g. post, page, product)
+      schema:
+        type: string
+        example: post

@@ -1,0 +1,52 @@
+openapi: 3.2.0
+info:
+  title: MyYoast Provisioning Provisioning Account API
+  description: 'The MyYoast Provisioning API (also called the Subscription API) lets an approved Yoast provisioning partner create, read, renew, cancel, refund and site-link Yoast product subscriptions on behalf of their customers, retrieve the current plugin version and download URLs for a product code, schedule a GDPR delete for a customer, and rotate their own provisioner Basic Auth password. It is a partner API: credentials are issued by Yoast to provisioners only.'
+  version: 1.0.0
+  contact:
+    name: Yoast Developer Portal
+    url: https://developer.yoast.com/customization/myyoast/apis/subscription-api/
+  x-api-evangelist-provenance:
+    method: derived
+    source: https://github.com/Yoast/subscription-api-php-client
+    note: Derived verbatim from Yoast's own first-party swagger-codegen client (github.com/Yoast/subscription-api-php-client, "The Yoast provisioning API", API version 1.0.0). Paths, HTTP methods, operation ids, parameter names and locations, model property names and types, and the Basic Auth scheme were all read out of that generated client's src/Api/*.php and src/Model/*.php plus its docs/. Descriptions are quoted from the same generated docs. Yoast's own interactive Swagger document at https://my.yoast.com/provisioning-api/ requires provisioner credentials, so nothing here was invented to fill a gap.
+    fetched: '2026-08-13'
+servers:
+- url: https://my.yoast.com
+  description: MyYoast production (host taken verbatim from Configuration.php $host)
+tags:
+- name: Provisioning Account
+  description: Provisioner account self-service
+paths:
+  /api/provisioning/account/regenerate-token:
+    post:
+      operationId: provisioningAccountControllerRegenerateToken
+      summary: Generate a new auth token
+      description: This route generates a new password for the Basic Auth that is used by provisioner accounts to authenticate with. After this route is called, the old password will NO LONGER be valid. Please store the response of this request somewhere safe!
+      tags:
+      - Provisioning Account
+      security:
+      - basic: []
+      responses:
+        '200':
+          description: The regenerated provisioner credential
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegenerateTokenResponseDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    RegenerateTokenResponseDto:
+      type: object
+      description: The newly generated provisioner Basic Auth password. The generated client references this model but does not ship its definition, so field names are not published.
+      additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication with provisioner credentials issued by Yoast. The password can be rotated with POST /api/provisioning/account/regenerate-token.
