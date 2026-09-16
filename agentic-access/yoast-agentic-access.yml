@@ -1,20 +1,25 @@
-generated: '2026-07-15'
+generated: '2026-09-16'
 method: generated
-source: openapi/yoast-rest-openapi.yml
+source: openapi/yoast-abilities-api-openapi.yml, openapi/yoast-pages-api-openapi.yml, openapi/yoast-posts-api-openapi.yml,
+  openapi/yoast-provisioning-account-api-openapi.yml, openapi/yoast-provisioning-downloads-api-openapi.yml,
+  openapi/yoast-provisioning-users-api-openapi.yml, openapi/yoast-schema-aggregator-api-openapi.yml,
+  openapi/yoast-seo-head-api-openapi.yml, openapi/yoast-subscription-provisioning-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 5
+  operations: 23
   by_action_class:
-    connected: 5
+    connected: 16
+    acting: 7
   by_consequence:
-    read: 5
-  human_in_the_loop_required: 0
+    read: 16
+    safety-critical: 7
+  human_in_the_loop_required: 7
 operations:
-- path: /yoast/v1/get_head
+- path: /wp-abilities/v1/abilities
   method: get
-  operationId: getSeoHead
+  operationId: listAbilities
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -22,9 +27,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /wp/v2/posts
+- path: /wp-abilities/v1/abilities/yoast-seo/get-seo-scores/run
   method: get
-  operationId: listPostsWithSeo
+  operationId: runGetSeoScores
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -32,9 +37,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /wp/v2/posts/{id}
+- path: /wp-abilities/v1/abilities/yoast-seo/get-readability-scores/run
   method: get
-  operationId: getPostWithSeo
+  operationId: runGetReadabilityScores
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /wp-abilities/v1/abilities/yoast-seo/get-inclusive-language-scores/run
+  method: get
+  operationId: runGetInclusiveLanguageScores
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -62,3 +77,215 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /wp/v2/posts
+  method: get
+  operationId: listPostsWithSeo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /wp/v2/posts/{id}
+  method: get
+  operationId: getPostWithSeo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/provisioning/account/regenerate-token
+  method: post
+  operationId: provisioningAccountControllerRegenerateToken
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/provisioning/downloads/currentVersion
+  method: get
+  operationId: provisioningDownloadsControllerCurrentVersion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/provisioning/downloads/currentVersion
+  method: get
+  operationId: provisioningDownloadsControllerCurrentVersionV2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/provisioning/downloads/currentZip
+  method: get
+  operationId: provisioningDownloadsControllerCurrentZip
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/provisioning/user/schedule-delete
+  method: post
+  operationId: provisioningUsersControllerScheduleDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /yoast/v1/schema-aggregator/get-schema/{post_type}
+  method: get
+  operationId: getAggregatedSchema
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /yoast/v1/schema-aggregator/get-schema/{post_type}/{page}
+  method: get
+  operationId: getAggregatedSchemaPage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /yoast/v1/schema-aggregator/get-xml
+  method: get
+  operationId: getSchemaMap
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /yoast/v1/get_head
+  method: get
+  operationId: getSeoHead
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/provisioning/subscriptions/create
+  method: post
+  operationId: subscriptionProvisioningControllerCreate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/provisioning/subscriptions/{id}
+  method: get
+  operationId: subscriptionProvisioningControllerGetOne
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/provisioning/subscriptions/{id}/renew
+  method: post
+  operationId: subscriptionProvisioningControllerRenewSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/provisioning/subscriptions/{id}/cancel
+  method: post
+  operationId: subscriptionProvisioningControllerCancelSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/provisioning/subscriptions/{id}/refund
+  method: post
+  operationId: subscriptionProvisioningControllerRefundSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/provisioning/subscriptions/{id}/set-site
+  method: post
+  operationId: subscriptionProvisioningControllerSetSiteForSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
