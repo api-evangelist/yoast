@@ -43,11 +43,10 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
   schemas:
-    ScheduleDeleteUserDto:
-      type: object
-      description: Payload for scheduling a customer GDPR delete. The generated client references this model but does not ship its definition, so its properties are not published; treat the shape as unspecified rather than assuming fields.
-      additionalProperties: true
     SubscriptionProvisioningResponseDto:
       type: object
       description: A provisioned Yoast subscription
@@ -70,9 +69,10 @@ components:
             type: string
         siteUrl:
           type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid provisioner Basic Auth credentials
+    ScheduleDeleteUserDto:
+      type: object
+      description: Payload for scheduling a customer GDPR delete. The generated client references this model but does not ship its definition, so its properties are not published; treat the shape as unspecified rather than assuming fields.
+      additionalProperties: true
   securitySchemes:
     basic:
       type: http

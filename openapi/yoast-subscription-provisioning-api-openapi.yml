@@ -166,6 +166,13 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    CancelProvisionedSubscriptionDto:
+      type: object
+      description: Cancellation options
+      properties:
+        immediately:
+          type: boolean
+          description: Cancel now instead of at the end of the current period
     CreateProvisionedSubscriptionDto:
       type: object
       description: Payload used to create a subscription for a customer
@@ -209,18 +216,6 @@ components:
       properties:
         site:
           type: string
-    CancelProvisionedSubscriptionDto:
-      type: object
-      description: Cancellation options
-      properties:
-        immediately:
-          type: boolean
-          description: Cancel now instead of at the end of the current period
-  responses:
-    Unauthorized:
-      description: Missing or invalid provisioner Basic Auth credentials
-    NotFound:
-      description: No subscription found for the supplied id
   parameters:
     SubscriptionId:
       name: id
@@ -229,6 +224,11 @@ components:
       description: The provisioned subscription identifier
       schema:
         type: string
+  responses:
+    NotFound:
+      description: No subscription found for the supplied id
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
   securitySchemes:
     basic:
       type: http

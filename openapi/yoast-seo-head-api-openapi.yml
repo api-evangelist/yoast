@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Yoast REST Pages SEO Head API
+  title: Yoast REST SEO Head API
   description: The Yoast REST API returns all SEO metadata (meta tags, Schema.org JSON-LD, canonical URLs, Open Graph, Twitter Card data, and robots directives) for any URL or post on a WordPress site. The API is read-only and designed for headless WordPress implementations. It extends the WordPress WP-JSON REST API and provides a dedicated SEO head endpoint.
   version: 1.0.0
   contact:
@@ -52,31 +52,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-    SeoHeadResponse:
-      type: object
-      description: SEO metadata response for a URL
-      properties:
-        html:
-          type: string
-          description: Escaped prefabricated meta tags and Schema.org JSON-LD markup for the <head>
-        json:
-          $ref: '#/components/schemas/SeoMetadata'
-        status:
-          type: integer
-          description: HTTP status code for the requested URL
-          example: 200
     SeoMetadata:
       type: object
       description: Structured SEO metadata for a URL
@@ -171,3 +146,28 @@ components:
         schema:
           type: object
           description: Schema.org JSON-LD structured data
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+    SeoHeadResponse:
+      type: object
+      description: SEO metadata response for a URL
+      properties:
+        html:
+          type: string
+          description: Escaped prefabricated meta tags and Schema.org JSON-LD markup for the <head>
+        json:
+          $ref: '#/components/schemas/SeoMetadata'
+        status:
+          type: integer
+          description: HTTP status code for the requested URL
+          example: 200

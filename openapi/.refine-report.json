@@ -1,18 +1,42 @@
 {
   "provider": "yoast",
   "sources": [
-    "yoast-pages-api-openapi.yml",
-    "yoast-posts-api-openapi.yml",
-    "yoast-seo-head-api-openapi.yml"
+    "_original/yoast-myyoast-provisioning-openapi.yml",
+    "_original/yoast-rest-openapi.yml",
+    "_original/yoast-schema-aggregator-openapi.yml",
+    "yoast-abilities-api-openapi.yml"
   ],
   "outputs": [
+    "yoast-provisioning-account-api-openapi.yml",
+    "yoast-provisioning-downloads-api-openapi.yml",
+    "yoast-provisioning-users-api-openapi.yml",
+    "yoast-subscription-provisioning-api-openapi.yml",
     "yoast-pages-api-openapi.yml",
     "yoast-posts-api-openapi.yml",
-    "yoast-seo-head-api-openapi.yml"
+    "yoast-seo-head-api-openapi.yml",
+    "yoast-schema-aggregator-api-openapi.yml",
+    "yoast-abilities-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
-  "notes": [],
-  "skipped": []
+  "warnings": [
+    "yoast-abilities-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /wp-abilities/v1/abilities get, /wp-abilities/v1/abilities/yoast-seo/get-inclusive-language-scores/run get, /wp-abilities/v1/abilities/yoast-seo/get-readability-scores/run get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "yoast-myyoast-provisioning-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "yoast-rest-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "yoast-schema-aggregator-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "yoast-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-provisioning-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-provisioning-downloads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-provisioning-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-schema-aggregator-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-seo-head-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "yoast-subscription-provisioning-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
