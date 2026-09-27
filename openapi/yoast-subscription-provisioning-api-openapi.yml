@@ -166,6 +166,12 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    SetProvisionedSiteDto:
+      type: object
+      description: The site to link the subscription to
+      properties:
+        site:
+          type: string
     CancelProvisionedSubscriptionDto:
       type: object
       description: Cancellation options
@@ -210,12 +216,11 @@ components:
             type: string
         siteUrl:
           type: string
-    SetProvisionedSiteDto:
-      type: object
-      description: The site to link the subscription to
-      properties:
-        site:
-          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
+    NotFound:
+      description: No subscription found for the supplied id
   parameters:
     SubscriptionId:
       name: id
@@ -224,11 +229,6 @@ components:
       description: The provisioned subscription identifier
       schema:
         type: string
-  responses:
-    NotFound:
-      description: No subscription found for the supplied id
-    Unauthorized:
-      description: Missing or invalid provisioner Basic Auth credentials
   securitySchemes:
     basic:
       type: http
