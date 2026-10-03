@@ -117,6 +117,16 @@ components:
         default: 10
         example: 4
   schemas:
+    SeoScore:
+      allOf:
+      - $ref: '#/components/schemas/AnalysisScore'
+      - type: object
+        properties:
+          focus_keyphrase:
+            type:
+            - string
+            - 'null'
+            description: The focus keyphrase set on the post; returned only by the SEO ability
     AnalysisScore:
       type: object
       description: One post's analysis score
@@ -146,13 +156,3 @@ components:
           - yoast-seo/get-readability-scores
           - yoast-seo/get-inclusive-language-scores
       additionalProperties: true
-    SeoScore:
-      allOf:
-      - $ref: '#/components/schemas/AnalysisScore'
-      - type: object
-        properties:
-          focus_keyphrase:
-            type:
-            - string
-            - 'null'
-            description: The focus keyphrase set on the post; returned only by the SEO ability

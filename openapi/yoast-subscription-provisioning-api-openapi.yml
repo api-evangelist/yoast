@@ -166,12 +166,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    SetProvisionedSiteDto:
-      type: object
-      description: The site to link the subscription to
-      properties:
-        site:
-          type: string
     CancelProvisionedSubscriptionDto:
       type: object
       description: Cancellation options
@@ -179,20 +173,11 @@ components:
         immediately:
           type: boolean
           description: Cancel now instead of at the end of the current period
-    CreateProvisionedSubscriptionDto:
+    SetProvisionedSiteDto:
       type: object
-      description: Payload used to create a subscription for a customer
+      description: The site to link the subscription to
       properties:
-        customerEmail:
-          type: string
-          format: email
-        productCode:
-          type: string
         site:
-          type: string
-        firstName:
-          type: string
-        lastName:
           type: string
     SubscriptionProvisioningResponseDto:
       type: object
@@ -215,6 +200,21 @@ components:
           items:
             type: string
         siteUrl:
+          type: string
+    CreateProvisionedSubscriptionDto:
+      type: object
+      description: Payload used to create a subscription for a customer
+      properties:
+        customerEmail:
+          type: string
+          format: email
+        productCode:
+          type: string
+        site:
+          type: string
+        firstName:
+          type: string
+        lastName:
           type: string
   responses:
     Unauthorized:
