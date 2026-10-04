@@ -50,7 +50,6 @@ tags:
   - Schema
   - Metadata
   - Structured Data
-  - Headless CMS
   - Content Analysis
   - Agent Readiness
   - Plugins
@@ -266,6 +265,9 @@ apis:
   - type: SourceCode
     url: https://github.com/Yoast/subscription-api-php-client
 common:
+  - type: CapabilityMap
+    url: capabilities/yoast-capability-edges.yml
+    name: Yoast Business Capability Map
   - type: Overlay
     url: overlays/yoast-schema-aggregator-overlay.yaml
   - type: Overlay
@@ -393,3 +395,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 31
   pass: local-v1
+x-tags-removed:
+- Headless CMS
