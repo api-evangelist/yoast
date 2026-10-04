@@ -117,6 +117,17 @@ components:
         default: 10
         example: 4
   schemas:
+    Ability:
+      type: object
+      description: A registered WordPress ability as returned by the discovery endpoint. Yoast's developer portal documents the three Yoast ability names but not the full discovery-record shape, so only the name is asserted here.
+      properties:
+        name:
+          type: string
+          enum:
+          - yoast-seo/get-seo-scores
+          - yoast-seo/get-readability-scores
+          - yoast-seo/get-inclusive-language-scores
+      additionalProperties: true
     SeoScore:
       allOf:
       - $ref: '#/components/schemas/AnalysisScore'
@@ -145,14 +156,3 @@ components:
         label:
           type: string
           description: Human-readable score label
-    Ability:
-      type: object
-      description: A registered WordPress ability as returned by the discovery endpoint. Yoast's developer portal documents the three Yoast ability names but not the full discovery-record shape, so only the name is asserted here.
-      properties:
-        name:
-          type: string
-          enum:
-          - yoast-seo/get-seo-scores
-          - yoast-seo/get-readability-scores
-          - yoast-seo/get-inclusive-language-scores
-      additionalProperties: true

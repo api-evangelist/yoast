@@ -84,41 +84,6 @@ paths:
           description: Page not found
 components:
   schemas:
-    PageWithSeo:
-      type: object
-      description: WordPress page with Yoast SEO metadata
-      properties:
-        id:
-          type: integer
-          description: Page ID
-        date:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        slug:
-          type: string
-        status:
-          type: string
-        title:
-          type: object
-          properties:
-            rendered:
-              type: string
-        content:
-          type: object
-          properties:
-            rendered:
-              type: string
-        link:
-          type: string
-          format: uri
-        yoast_head:
-          type: string
-          description: HTML meta tags and Schema.org output for the <head>
-        yoast_head_json:
-          $ref: '#/components/schemas/SeoMetadata'
     SeoMetadata:
       type: object
       description: Structured SEO metadata for a URL
@@ -213,3 +178,38 @@ components:
         schema:
           type: object
           description: Schema.org JSON-LD structured data
+    PageWithSeo:
+      type: object
+      description: WordPress page with Yoast SEO metadata
+      properties:
+        id:
+          type: integer
+          description: Page ID
+        date:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        slug:
+          type: string
+        status:
+          type: string
+        title:
+          type: object
+          properties:
+            rendered:
+              type: string
+        content:
+          type: object
+          properties:
+            rendered:
+              type: string
+        link:
+          type: string
+          format: uri
+        yoast_head:
+          type: string
+          description: HTML meta tags and Schema.org output for the <head>
+        yoast_head_json:
+          $ref: '#/components/schemas/SeoMetadata'

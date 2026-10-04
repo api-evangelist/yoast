@@ -52,6 +52,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SeoHeadResponse:
+      type: object
+      description: SEO metadata response for a URL
+      properties:
+        html:
+          type: string
+          description: Escaped prefabricated meta tags and Schema.org JSON-LD markup for the <head>
+        json:
+          $ref: '#/components/schemas/SeoMetadata'
+        status:
+          type: integer
+          description: HTTP status code for the requested URL
+          example: 200
     SeoMetadata:
       type: object
       description: Structured SEO metadata for a URL
@@ -158,16 +171,3 @@ components:
           properties:
             status:
               type: integer
-    SeoHeadResponse:
-      type: object
-      description: SEO metadata response for a URL
-      properties:
-        html:
-          type: string
-          description: Escaped prefabricated meta tags and Schema.org JSON-LD markup for the <head>
-        json:
-          $ref: '#/components/schemas/SeoMetadata'
-        status:
-          type: integer
-          description: HTTP status code for the requested URL
-          example: 200

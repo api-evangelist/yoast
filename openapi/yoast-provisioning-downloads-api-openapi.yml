@@ -76,13 +76,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ProductVersionsDto:
-      type: object
-      properties:
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVersionDto'
     ProductVersionDto:
       type: object
       properties:
@@ -94,6 +87,13 @@ components:
           type: string
         downloadUrl:
           type: string
+    ProductVersionsDto:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVersionDto'
   responses:
     Unauthorized:
       description: Missing or invalid provisioner Basic Auth credentials

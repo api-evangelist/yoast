@@ -166,6 +166,12 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    SetProvisionedSiteDto:
+      type: object
+      description: The site to link the subscription to
+      properties:
+        site:
+          type: string
     CancelProvisionedSubscriptionDto:
       type: object
       description: Cancellation options
@@ -173,11 +179,20 @@ components:
         immediately:
           type: boolean
           description: Cancel now instead of at the end of the current period
-    SetProvisionedSiteDto:
+    CreateProvisionedSubscriptionDto:
       type: object
-      description: The site to link the subscription to
+      description: Payload used to create a subscription for a customer
       properties:
+        customerEmail:
+          type: string
+          format: email
+        productCode:
+          type: string
         site:
+          type: string
+        firstName:
+          type: string
+        lastName:
           type: string
     SubscriptionProvisioningResponseDto:
       type: object
@@ -201,26 +216,6 @@ components:
             type: string
         siteUrl:
           type: string
-    CreateProvisionedSubscriptionDto:
-      type: object
-      description: Payload used to create a subscription for a customer
-      properties:
-        customerEmail:
-          type: string
-          format: email
-        productCode:
-          type: string
-        site:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid provisioner Basic Auth credentials
-    NotFound:
-      description: No subscription found for the supplied id
   parameters:
     SubscriptionId:
       name: id
@@ -229,6 +224,11 @@ components:
       description: The provisioned subscription identifier
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
+    NotFound:
+      description: No subscription found for the supplied id
   securitySchemes:
     basic:
       type: http
