@@ -1,0 +1,45 @@
+slug: yoast
+provider: Yoast
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Subscription Provisioning
+  spec_file: yoast-subscription-provisioning-api-openapi.yml
+  capability_id: BC-4240
+  capability_id_l1: BC-4240
+  capability_name: Subscription Lifecycle Management
+  confidence: 0.85
+  evidence: Create a subscription ... Renew a subscription ... Cancel a single subscription ... Refund
+    a single subscription ... Link a subscription to a site
+  reason: Plainly the commercial subscription lifecycle (create, renew, cancel, refund, site-link) for
+    a software product. Spans provisioning, renewal and cancellation, so no single L2 is named by the
+    evidence.
+- tag: Abilities
+  spec_file: yoast-abilities-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: Run the SEO analysis score ability ... get-readability-scores ... get-inclusive-language-scores
+  reason: The operations return SEO, readability and inclusive-language analysis scores for site content
+    — on-site SEO/content optimisation, which sits under Digital Marketing Management (web, SEO). Confidence
+    moderate because the surface is a thin read-only analysis-score exposure.
+- tag: SEO Head
+  spec_file: yoast-seo-head-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: GET /yoast/v1/get_head  getSeoHead  Get SEO Head for URL
+  reason: Returns the full SEO head (meta tags, Schema.org JSON-LD, canonical, Open Graph) for a URL —
+    core SEO/web marketing output consumed by headless sites.
