@@ -2,6 +2,7 @@ generated: '2026-10-15'
 method: searched
 checked:
 - woocommerce/integrations/woocommerce-integration-edges.yml
+- wordpress/integrations/wordpress-integration-edges.yml
 source:
 - woocommerce/integrations/woocommerce-integration-edges.yml
 edges:
@@ -23,3 +24,20 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: extension
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/duplicate-post/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Yoast Duplicate Post
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
