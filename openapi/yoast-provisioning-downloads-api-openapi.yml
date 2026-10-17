@@ -75,6 +75,9 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid provisioner Basic Auth credentials
   schemas:
     ProductVersionDto:
       type: object
@@ -94,9 +97,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductVersionDto'
-  responses:
-    Unauthorized:
-      description: Missing or invalid provisioner Basic Auth credentials
   parameters:
     ProductCode:
       name: productCode
