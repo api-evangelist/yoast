@@ -29,3 +29,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: yoast-google-workspace-own
+  label: Google Workspace (own)
+  partner: google-workspace
+  partner_name: Google Workspace (own)
+  category: Google Workspace app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://workspace.google.com/marketplace/app/yoast_seo_content_analyses/13982441862
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
