@@ -2,6 +2,13 @@ generated: '2026-10-15'
 method: searched
 checked:
 - google-workspace/integrations/google-workspace-integration-edges.yml
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - woocommerce/integrations/woocommerce-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
 source:
@@ -59,3 +66,96 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Google Workspace app
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@yoast/analysis-report
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@yoast/analysis-report'
+      version: 2.0.0-alpha.2
+      released: '2026-03-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/analysis-report
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: '@yoast/components'
+      version: 3.0.0-alpha.3
+      released: '2026-03-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/components
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: '@yoast/feature-flag'
+      version: 0.6.0-alpha.2
+      released: '2026-03-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/feature-flag
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: '@yoast/related-keyphrase-suggestions'
+      version: 0.4.0
+      released: '2026-03-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/related-keyphrase-suggestions
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: '@yoast/replacement-variable-editor'
+      version: 2.0.0
+      released: '2026-03-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/replacement-variable-editor
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: '@yoast/search-metadata-previews'
+      version: 3.0.0
+      released: '2026-03-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/search-metadata-previews
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: '@yoast/ui-library'
+      version: 4.6.0
+      released: '2026-08-27'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@yoast/ui-library
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: yoastseo
+      version: 3.6.0
+      released: '2026-02-13'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/yoastseo
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
