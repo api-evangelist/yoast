@@ -1,5 +1,11 @@
-generated: '2026-10-15'
+generated: '2026-10-20'
 method: searched
+source:
+- woocommerce/integrations/woocommerce-integration-edges.yml
+- https://zapier.com/apps/yoast/integrations
+- https://n8n.io/integrations/yoast/
+- https://composio.dev/toolkits/yoast
+- https://monid.ai/tools/yoast
 checked:
 - google-workspace/integrations/google-workspace-integration-edges.yml
 - https://api.nuget.org/v3
@@ -11,8 +17,12 @@ checked:
 - https://rubygems.org/api/v1
 - woocommerce/integrations/woocommerce-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
-source:
-- woocommerce/integrations/woocommerce-integration-edges.yml
+- https://composio.dev/toolkits/yoast
+- https://monid.ai/tools/yoast
+- https://n8n.io/integrations/yoast/
+- https://zapier.com/apps/yoast/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: WooCommerce (own)
   partner: woocommerce
@@ -159,3 +169,4 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+templates: []
