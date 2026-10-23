@@ -27,6 +27,9 @@ checked:
 - https://officialskills.sh/sitemap.xml
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps: []
 edges:
@@ -205,4 +208,62 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-agent-skills.py
   first_seen: '2026-10-20'
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/yoast/api-libs
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: yoast/api-libs
+      version: '2.0'
+      released: '2015-07-14'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/yoast/api-libs
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: yoast/i18n-module
+      version: 3.1.1
+      released: '2019-05-07'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/yoast/i18n-module
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+      abandoned: true
+    - name: yoast/yoast-seo-for-neos
+      version: 2.0.0
+      released: '2025-04-04'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/yoast/yoast-seo-for-neos
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    - name: yoast/yoastcs
+      version: 3.4.3
+      released: '2026-08-07'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/yoast/yoastcs
+      repo_leg: github-org:yoast
+      publisher_leg: email:yoast.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates: []
