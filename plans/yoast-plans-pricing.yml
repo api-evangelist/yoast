@@ -1,0 +1,127 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Yoast
+providerId: yoast
+created: '2026-05-04'
+# Provenance: originally written by the API Evangelist bulk sweep dated 2026-05-04
+# (roadmap#35). Re-harvested 2026-08-13 from the live Yoast pricing page, which
+# confirmed the Premium headline price and the per-seat Google Docs add-on.
+method: searched
+modified: '2026-08-13'
+reconciled: true
+reconciled_date: '2026-08-13'
+plan_count: 2
+tags:
+  - SEO
+  - WordPress
+  - Plugin
+  - Content
+description: |
+  Yoast is sold as a WordPress / Shopify plugin licence rather than a metered API. The
+  Yoast SEO plugin exposes its functionality via internal WordPress REST routes (under
+  /wp-json/yoast/v1/...) which inherit the WordPress site's own auth and throttling
+  rather than a Yoast-hosted gateway. Pricing below reflects the published Yoast Premium
+  plugin licence; there is no separate Yoast API price card to reconcile.
+sources:
+  - https://yoast.com/wordpress/plugins/seo/pricing/
+currencies:
+  - USD
+  - EUR
+  - GBP
+api_pricing:
+  metered: false
+  api_price_card_published: false
+  note: >-
+    No per-call, per-seat or per-quota API pricing exists. Licence pricing is the only
+    price Yoast publishes.
+notes: |
+  Re-checked against https://yoast.com/wordpress/plugins/seo/pricing/ on 2026-08-13
+  (HTTP 200). Confirmed: Yoast SEO Premium is USD 118.80 per year excluding VAT, one
+  subscription covers one site or domain, multiple subscriptions are bought at checkout
+  with a bulk discount, and extra Yoast SEO Google Docs seats are USD 5 excl. VAT per
+  month each. EUR and GBP are also offered. The page does not publish comparative
+  pricing for WooCommerce SEO, Local SEO, Video SEO, News SEO or the Shopify app, so
+  those remain unpriced here rather than guessed.
+
+  IMPORTANT for API consumers: none of these plans is an API price. Yoast sells a plugin
+  licence. The Yoast REST, Schema Aggregator and Abilities endpoints run inside the
+  customer's own WordPress install and cost nothing per call; the one Yoast-hosted API,
+  the MyYoast Provisioning API, is partner-gated with no published price card at all.
+  There is no metered Yoast API tier to compare against competitors.
+plans:
+  - id: yoast-seo-free
+    name: Yoast SEO (Free)
+    type: freemium
+    description: Free WordPress plugin available via wordpress.org. No paid entitlement;
+      the plugin operates entirely inside the user's WordPress install.
+    entries:
+      - label: Plugin Licence
+        name: free_licence
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+    elements:
+      - name: Core SEO checks
+      - name: Readability analysis
+      - name: WordPress REST integration on the host site
+  - id: yoast-seo-premium
+    name: Yoast SEO Premium
+    type: subscription
+    description: Annual licence for the Yoast SEO Premium plugin on a single WordPress site.
+    entries:
+      - label: Premium Licence (1 site)
+        name: premium_licence
+        type: subscription
+        metric: year
+        limit: 1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: '$118.80 / year (ex VAT)'
+        userMultiplied: false
+    elements:
+      - name: Up to 5 keyphrases per page
+      - name: Redirect manager
+      - name: Internal linking suggestions
+      - name: AI title and description suggestions
+      - name: Social previews (Facebook, X)
+      - name: 24/7 support
+      - name: Bundled Local SEO, Video SEO, News SEO plugins
+      - name: One Google Docs add-on seat
+    addOns:
+      - name: Additional Yoast SEO Google Docs seat
+        price: '$5 / month (ex VAT) per seat'
+        source: https://yoast.com/wordpress/plugins/seo/pricing/
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - subscription
+  units:
+  - period
+  plans:
+  - name: Yoast SEO (Free)
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - month
+  - name: Yoast SEO Premium
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - period
+    periods:
+    - year
